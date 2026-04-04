@@ -1,0 +1,165 @@
+<div class="container-custom">
+  
+    <div class="sideBar" [ngClass]="{ active: isSidebarActive }">
+      
+      <div class="toggle" [ngClass]="{ active: isSidebarActive }" (click)="toggleSidebar()">
+        <span class="material-symbols-outlined icon open"> menu </span>
+        <span class="material-symbols-outlined icon close"> close </span>
+      </div>
+      
+      <ul>
+        <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <b></b>
+                <b></b>
+                <a  href="/home">
+                    <span class="material-symbols-outlined icon">home</span>
+                    <span class="title">Home</span>
+                </a>
+            </li>
+            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <b></b>
+                <b></b>
+                <a [routerLink]="['/dashBoard/list']">
+                    <span class="material-symbols-outlined icon">face </span>
+                    <span class="title">Profile</span>
+                </a>
+            </li>
+            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <b></b>
+                <b></b>
+                <a [routerLink]="['/messages']" >
+                    <span class="material-symbols-outlined icon"> notifications_unread </span> 
+                    <span class="title">Messages</span>
+                </a>
+            </li>
+            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <b></b>
+                <b></b>
+                <a [routerLink]="['/settings']" >                    
+                  <span class="material-symbols-outlined icon"> settings </span>
+                    <span class="title">Setting</span>
+                </a>
+            </li>
+            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <b></b>
+                <b></b>
+                <a [routerLink]="['/help']" >                   
+                  <span class="material-symbols-outlined icon"> help </span>
+                  <span class="title">Help</span>
+                </a>
+            </li>
+            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <b></b>
+                <b></b>
+                <a [routerLink]="['/password']">
+                    <span class="material-symbols-outlined icon"> key_vertical </span>
+                    <span class="title">Password</span>
+                </a>
+            </li>
+            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <b></b>
+                <b></b>
+                <a [routerLink]="['/sing-out']">
+                    <span class="material-symbols-outlined icon"> mode_off_on</span>
+                    <span class="title">Sing Out</span>
+                </a>
+            </li>
+      </ul>
+    </div>
+   
+
+  <div class="area-work" [ngClass]="{ 'expanded': isSidebarActive }">
+    <div class="titulo-dashboard">
+      <div>
+        <h1 class="">Usuarios</h1>
+      </div>
+     
+    </div>
+
+    <table class="table-custom hidden md:table">
+      <thead >
+          <tr >
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Rol</th>
+              <th>Fecha Creado</th>
+              <th>Fecha Actualizado</th>
+              <th>Botones</th>
+            </tr>
+      </thead>
+      <tbody >
+          <tr class="table-row">
+            <td>
+              <div></div>
+            </td>
+            <td>
+              <div></div>
+            </td>
+            <td>
+              <div></div>
+            </td>
+            <td>
+              <div></div>
+            </td>
+            <td>
+              <div></div>
+            </td>
+
+            <td>
+              <div class="btn-table">
+                <button class="btn-edt" [routerLink]="['/usuarios/usuario/form']"  matTooltip="Editar Usuario">
+                  <span class="material-symbols-outlined"> edit </span> 
+                </button>
+                <button class="btn-del" matTooltip="Eliminar Usuario">
+                  <span class="material-symbols-outlined"> delete_forever </span>
+                </button>  <!-- href="/admin/usuarios"  -->
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+  <div class="mobile-container">
+    <div class="user-card">
+
+      <div class="user-row">
+        <span class="label">Id:</span>
+        <span class="value">{{ "id" }}</span>
+      </div>
+
+      <div class="user-row">
+        <span class="label">Nombre:</span>
+        <span class="value">{{ "user.nombre" }}</span>
+      </div>
+
+      <div class="user-row">
+        <span class="label">Rol:</span>
+        <span class="value">{{ "user.rol" }}</span>
+      </div>
+
+      <div class="user-row">
+        <span class="label">Fecha:</span>
+        <span class="value">{{ "user.fecha" }}</span>
+      </div>
+
+      <div class="user-actions">
+        <button class="btn-edt" [routerLink]="['/usuarios/usuario/form']">
+          <span class="material-symbols-outlined">edit</span>
+        </button>
+
+        <button class="btn-del">
+          <span class="material-symbols-outlined">delete_forever</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+    <div class="btn-work">
+      <button class="btn-work-add" [routerLink]="['/usuarios/usuario/form']"  matTooltip="Nuevo Usuario">
+          NUEVO USUARIO
+      </button>
+    </div>
+  </div>
+  
+</div>  

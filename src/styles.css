@@ -1,1 +1,500 @@
-/* You can add global styles to this file, and also import other style files */
+/* ===============================
+TAILWIND BASE
+================================ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* ===============================
+GLOBAL STYLES
+================================ */
+
+/* Estilo letra */
+
+@layer base {
+  html {
+    @apply font-sans;
+  }
+}
+
+.app-bg {
+  @apply 
+    h-screen w-screen
+    p-10
+    bg-gradient-to-br
+         from-sky-100
+         via-sky-200
+         to-sky-300;
+}
+
+/* Contenedor general */
+.container-custom {
+  @apply 
+    w-full 
+    h-full  
+    flex
+    flex-row
+    p-2
+    bg-blue-main
+    rounded-dashboard
+    shadow-xl;
+}
+
+
+/* ===============================
+        DASHBOARD
+================================ */
+
+
+.sideBar{
+    position: relative;
+    
+    width: 70px;
+    transition: 0.3s;
+    width: 70px;
+    border-radius: 10px;
+    box-sizing: initial;
+
+    background: #008abb;
+    overflow-x: hidden;
+}
+
+.sideBar.active {
+    width: 250px;
+}
+
+.sideBar ul{
+    position: absolute;
+    width: 100%;
+    padding-top: 40px;
+}
+
+.sideBar ul li{
+    position: relative;
+    list-style: none;
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.sideBar ul li.active{
+    background: #ffffff;
+}
+
+.sideBar ul li.active a{
+    color: #333;
+}
+
+/*Elemento de la Curva de la etiqueta hacia arriba blanca*/
+.sideBar ul li b:nth-child(1){
+    position: absolute;
+    top: -20px;
+    height: 20px;
+    width: 100%;
+    background: #ffffff;
+    display: none;
+}
+
+/*Curva de la etiqueta hacia arriba azul*/
+.sideBar ul li b:nth-child(1)::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-bottom-right-radius: 20px; 
+    background: #008abb;
+}
+
+/*MOSTRAR LA CURBA SUPERIRO*/
+.sideBar ul li.active b:nth-child(1),
+.sideBar ul li.active b:nth-child(2){
+    display: block;
+}
+
+/*Elemento de la Curva de la etiqueta hacia abajo blanca*/
+.sideBar ul li b:nth-child(2){
+    position: absolute;
+    bottom: -20px;
+    height: 20px;
+    width: 100%;
+    background: #ffffff;
+    display: none;
+}
+
+/*Curva de la etiqueta hacia abajo azul*/
+.sideBar ul li b:nth-child(2)::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-top-right-radius: 20px;
+    background: #008abb;
+}
+
+.sideBar ul li a{
+    position: relative;
+    display: block;
+    width: 100%;
+    display: flex;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.sideBar ul li a .icon{
+    position: relative;
+    display: block;
+    min-width: 60px;
+    height: 60px;
+    line-height: 70px;
+    text-align: center;
+
+    font-size: 1.5em;
+}
+
+.sideBar ul li a .title{
+    position: relative;
+    display: block;
+    padding-left: 10px;
+    height: 60px;
+    line-height: 60px;
+    white-space: normal;
+}
+
+.toggle{
+    width: 50px;
+    height: 50px;
+    background: #008abb;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 20px;
+    left: 8px;
+}
+
+.toggle.active{
+background: #ff4d89;
+}
+
+.toggle .icon{
+    position: absolute;
+    color: #fff;
+    font-size: 35px;
+    display: none;
+}
+
+.toggle .icon.open, .toggle.active .icon.close{
+    display: block;
+}
+
+.toggle .icon.close, .toggle.active .icon.open{
+    display: none;
+}
+
+
+/* ===============================
+        AREA DE TRABAJO
+================================ */
+
+
+.area-work {
+  @apply
+    bg-white
+    flex-1
+    min-w-0
+    h-full 
+    rounded-dashboard
+    p-5
+    flex
+    flex-col
+}
+
+.area-work {
+  transition: 0.3s;
+}
+
+
+
+/* TITULO AREA DE TRABAJO */
+
+.titulo-dashboard{
+  @apply
+    flex
+    w-full
+    justify-between
+    items-center
+    p-2
+    mb-5
+    text-5xl
+    font-bold
+    text-blue-main
+}
+
+
+
+/* ===============================
+   TABLES
+================================ */
+
+.table-custom {
+  @apply
+    w-full
+    border-collapse
+    rounded-xl
+    overflow-hidden
+    shadow-lg
+    border
+    border-blue-light;
+}
+
+/* Header */
+
+.table-custom thead {
+  @apply bg-blue-main text-white;
+}
+
+.table-custom th {
+  @apply
+    px-4
+    py-3
+    text-center
+    font-semibold;
+}
+
+/* Body */
+
+.table-custom td {
+  @apply
+    px-4
+    py-2
+    text-blue-dark
+    text-center
+    border-b;
+}
+
+
+/* Filas */
+
+.table-row {
+  @apply
+    bg-sky-200
+    cursor-pointer
+    transition
+    duration-300
+    hover:bg-sky-300;
+}
+
+/* Botones dentro tabla */
+
+.btn-table {
+  @apply
+    flex flex-row gap-2 justify-evenly;
+}
+
+.btn-edt{
+  @apply
+    bg-green-600
+    text-white
+    font-extrabold
+    flex
+    text-center
+    justify-center
+    p-2
+    rounded-full
+ 
+    shadow-md
+    hover:shadow-2xl
+    shadow-black/20
+
+    cursor-pointer
+    transition
+    duration-500
+    hover:bg-blue-light-very
+    hover:text-blue-main
+}
+
+.btn-del{
+  @apply
+    bg-red-600
+    text-white
+    font-extrabold
+    flex
+    text-center
+    justify-center
+    p-2
+    rounded-full
+  
+    shadow-md
+    hover:shadow-2xl
+    shadow-slate-700/20
+
+    cursor-pointer
+    transition
+    duration-500
+    hover:bg-blue-light-very
+    hover:text-blue-main
+    
+}
+
+
+
+
+/* ===============================
+   BUTTONS
+================================ */
+
+
+
+.btn-work button{
+  @apply
+    bg-blue-main
+    rounded-xl
+}
+
+.btn-work {
+  @apply
+    w-fit
+    flex
+    justify-center
+    mt-auto
+}
+
+.btn-work-add{
+  @apply
+    p-2
+    text-white
+    font-extrabold
+
+    shadow-md
+    hover:shadow-2xl
+    shadow-slate-700/20
+
+    cursor-pointer
+    transition
+    duration-500
+    hover:bg-blue-light-very
+    hover:text-blue-main
+
+}
+
+
+
+
+
+/* =============================
+    RESPONSIVE ADAPTATION
+============================= */
+
+/* Pantallas medianas (tablets) */
+
+@media (max-width: 992px) {
+ 
+}
+
+@media (max-width: 768px) {
+  
+  .area-work {
+    overflow-x: auto;
+    @apply 
+    px-2
+  }
+
+   .titulo-dashboard {
+    @apply
+    px-0
+  }
+
+  .sideBar.active {
+    width: 180px;
+  }
+  
+  .app-bg {
+    @apply
+    p-2
+  }
+  
+
+}
+
+/* Ocultar menú hamburguesa en desktop */
+@media (min-width: 768px) {
+ 
+}
+
+/* En móviles ocultar los botones de escritorio */
+@media (max-width: 767px) {
+ 
+
+
+}
+
+/* Pantallas pequeñas (móviles) */
+@media (max-width: 576px) {
+ 
+  .titulo-dashboard h1{
+    @apply
+    text-4xl
+  }
+
+}
+
+@media (max-width: 360px) {
+
+
+}
+
+
+
+
+@layer components {
+
+  /* ===============================
+      MOBILE TABLE (CARDS)
+  ============================== */
+
+  .mobile-container {
+    @apply md:hidden space-y-4;
+  }
+
+  .user-card {
+    @apply bg-white p-4 rounded-xl shadow border border-gray-100;
+  }
+
+  .user-row {
+    @apply flex justify-between py-2 border-b last:border-b-0;
+  }
+
+  .label {
+    @apply font-bold text-gray-600;
+  }
+
+  .value {
+    @apply text-gray-800;
+  }
+
+  .user-actions {
+    @apply flex justify-end gap-2 mt-3;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
