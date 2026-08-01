@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Data } from '../interface/data.interfaces';
 import { DashBoardService } from '../dash-board/dash-board.service';
 
@@ -6,6 +6,7 @@ import { DashBoardService } from '../dash-board/dash-board.service';
     selector: 'app-registros',
     templateUrl: './registros.component.html',
     styleUrls: [],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class RegistrosComponent implements OnInit {

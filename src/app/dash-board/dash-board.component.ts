@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DashBoardService } from './dash-board.service';
 import { Data } from '../interface/data.interfaces';
 
@@ -7,6 +7,7 @@ import { Data } from '../interface/data.interfaces';
     selector: 'app-dash-board',
     templateUrl: './dash-board.component.html',
     styleUrls: [],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DashBoardComponent implements OnInit {
