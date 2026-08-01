@@ -3,9 +3,10 @@ import { Data } from '../interface/data.interfaces';
 import { DashBoardService } from '../dash-board/dash-board.service';
 
 @Component({
-  selector: 'app-registros',
-  templateUrl: './registros.component.html',
-  styleUrls: []
+    selector: 'app-registros',
+    templateUrl: './registros.component.html',
+    styleUrls: [],
+    standalone: false
 })
 export class RegistrosComponent implements OnInit {
   

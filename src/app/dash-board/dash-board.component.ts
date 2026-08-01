@@ -4,9 +4,10 @@ import { Data } from '../interface/data.interfaces';
 
 
 @Component({
-  selector: 'app-dash-board',
-  templateUrl: './dash-board.component.html',
-  styleUrls: []
+    selector: 'app-dash-board',
+    templateUrl: './dash-board.component.html',
+    styleUrls: [],
+    standalone: false
 })
 export class DashBoardComponent implements OnInit {
   isSidebarActive = false;
