@@ -18,6 +18,10 @@ GLOBAL STYLES
   }
 }
 
+html, body {
+  height: 100%;
+}
+
 .app-bg {
   @apply 
     h-screen w-screen
@@ -208,12 +212,13 @@ background: #ff4d89;
   @apply
     bg-white
     flex-1
+     flex
+    flex-col
     min-w-0
     h-full 
     rounded-dashboard
     p-5
-    flex
-    flex-col
+   
 }
 
 .area-work {
@@ -251,8 +256,9 @@ background: #ff4d89;
     overflow-hidden
     shadow-lg
     border
-    border-blue-light;
-}
+    border-blue-light
+    text-xs;
+  }
 
 /* Header */
 
@@ -291,6 +297,11 @@ background: #ff4d89;
     hover:bg-sky-300;
 }
 
+
+.tabla-wrapper {
+  @apply flex-1 min-h-0 overflow-auto;
+}
+
 /* Botones dentro tabla */
 
 .btn-table {
@@ -305,6 +316,7 @@ background: #ff4d89;
     font-extrabold
     flex
     text-center
+    text-xs
     justify-center
     p-2
     rounded-full
@@ -384,6 +396,69 @@ background: #ff4d89;
 
 }
 
+.box {
+  width: 240px;
+  height: 140px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s;
+  text-align: center;
+  background: #fff;
+}
+
+.box:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+
+.card {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.card h1 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #333;
+}
+
+.card button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #1976d2;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.card button:hover {
+  background-color: #125aa0;
+  transform: scale(1.05);
+}
+
+.card button:active {
+  transform: scale(0.98);
+}
+
+.success {
+  margin-top: 15px;
+  color: #4caf50;
+  font-weight: bold;
+}
 
 
 
@@ -452,7 +527,6 @@ background: #ff4d89;
 
 
 
-
 @layer components {
 
   /* ===============================
@@ -484,14 +558,6 @@ background: #ff4d89;
   }
 
 }
-
-
-
-
-
-
-
-
 
 
 

@@ -1,0 +1,116 @@
+<div class="container">
+  <div class="titulo-dashboard">
+    <h1>Registros</h1>   
+  </div>
+<div class="tabla-wrapper">
+  <table class="table-custom hidden md:table">
+    <thead >
+        <tr >
+            <th>Id</th>
+            <th>N.Factura</th>
+            <th>Cliente</th>
+            <th>Nit</th>
+            <th>V. Total</th>
+            <th>M. Pago</th>
+            <th>Botones</th>
+          </tr>
+    </thead>
+    <tbody >
+        <tr class="table-row" *ngFor="let data of dataObj">
+          <td>
+            <div>{{data.id}}</div>
+          </td>
+          <td>
+            <div>{{data.numeroFactura}}</div>
+          </td>
+          <td>
+            <div>{{data.cliente}}</div>
+          </td>
+          <td>
+            <div>{{data.nit}}</div>
+          </td>
+          <td>
+            <div>{{data.valorTotal}}</div>
+          </td>
+          <td>
+            <div>{{data.medioPago}}</div>
+          </td>
+
+          <td>
+            <div class="btn-table">
+              <button class="btn-edt"   matTooltip="Editar Registro">
+                <span class="material-symbols-outlined"> edit </span> 
+              </button>
+              <button class="btn-del" matTooltip="Eliminar Registro">
+                <span class="material-symbols-outlined"> delete_forever </span>
+              </button>  
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+   <div class="block md:hidden mobile-container">
+    <div class="user-card" *ngFor="let data of dataObj">
+
+        <div class="user-row">
+          <span class="label">Id:</span>
+          <span class="value">{{ data.id }}</span>
+        </div>
+
+        <div class="user-row">
+          <span class="label">factura:</span>
+          <span class="value">{{ data.numeroFactura }}</span>
+        </div>
+
+        <div class="user-row">
+          <span class="label">cliente:</span>
+          <span class="value">{{ data.cliente }}</span>
+        </div>
+
+        <div class="user-row">
+          <span class="label">Nit:</span>
+          <span class="value">{{ data.nit }}</span>
+        </div>
+
+        <div class="user-row">
+          <span class="label">F. Generación:</span>
+          <span class="value">{{ data.fechaGeneracion }}</span>
+        </div>
+        <div class="user-row">
+          <span class="label">F. Vencimiento:</span>
+          <span class="value">{{ data.fechaVencimiento }}</span>
+        </div>
+        <div class="user-row">
+          <span class="label">V. Total:</span>
+          <span class="value">{{ data.valorTotal }}</span>
+        </div>
+         <div class="user-row">
+          <span class="label">F. Pago:</span>
+          <span class="value">{{ data.formaPago }}</span>
+        </div>
+                 <div class="user-row">
+          <span class="label">M. Pago:</span>
+          <span class="value">{{ data.medioPago }}</span>
+        </div>
+
+        <div class="user-actions">
+          <button class="btn-edt" >
+            <span class="material-symbols-outlined">edit</span>
+          </button>
+
+          <button class="btn-del">
+            <span class="material-symbols-outlined">delete_forever</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  <div class="btn-work">
+    <button class="btn-work-add" >
+        NUEVO REGISTRO
+    </button>
+</div>
+</div>

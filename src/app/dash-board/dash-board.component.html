@@ -8,10 +8,10 @@
       </div>
       
       <ul>
-        <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <b></b>
                 <b></b>
-                <a  href="/home">
+                <a [routerLink]="['/dashboard/home']">
                     <span class="material-symbols-outlined icon">home</span>
                     <span class="title">Home</span>
                 </a>
@@ -19,7 +19,15 @@
             <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <b></b>
                 <b></b>
-                <a [routerLink]="['/dashBoard/list']">
+                 <a [routerLink]="['/dashboard/registros/list']">
+                    <span class="material-symbols-outlined icon"> checkbook </span>
+                    <span class="title">Registros</span>
+                </a>
+            </li>
+            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <b></b>
+                <b></b>
+                 <a [routerLink]="['/dashboard/usuarios/list']">
                     <span class="material-symbols-outlined icon">face </span>
                     <span class="title">Profile</span>
                 </a>
@@ -27,7 +35,7 @@
             <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <b></b>
                 <b></b>
-                <a [routerLink]="['/messages']" >
+                <a [routerLink]="['/dashboard/messages/list']" >
                     <span class="material-symbols-outlined icon"> notifications_unread </span> 
                     <span class="title">Messages</span>
                 </a>
@@ -69,97 +77,8 @@
    
 
   <div class="area-work" [ngClass]="{ 'expanded': isSidebarActive }">
-    <div class="titulo-dashboard">
-      <div>
-        <h1 class="">Usuarios</h1>
-      </div>
-     
-    </div>
-
-    <table class="table-custom hidden md:table">
-      <thead >
-          <tr >
-              <th>Id</th>
-              <th>Nombre</th>
-              <th>Rol</th>
-              <th>Fecha Creado</th>
-              <th>Fecha Actualizado</th>
-              <th>Botones</th>
-            </tr>
-      </thead>
-      <tbody >
-          <tr class="table-row">
-            <td>
-              <div></div>
-            </td>
-            <td>
-              <div></div>
-            </td>
-            <td>
-              <div></div>
-            </td>
-            <td>
-              <div></div>
-            </td>
-            <td>
-              <div></div>
-            </td>
-
-            <td>
-              <div class="btn-table">
-                <button class="btn-edt" [routerLink]="['/usuarios/usuario/form']"  matTooltip="Editar Usuario">
-                  <span class="material-symbols-outlined"> edit </span> 
-                </button>
-                <button class="btn-del" matTooltip="Eliminar Usuario">
-                  <span class="material-symbols-outlined"> delete_forever </span>
-                </button>  <!-- href="/admin/usuarios"  -->
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-  <div class="mobile-container">
-    <div class="user-card">
-
-      <div class="user-row">
-        <span class="label">Id:</span>
-        <span class="value">{{ "id" }}</span>
-      </div>
-
-      <div class="user-row">
-        <span class="label">Nombre:</span>
-        <span class="value">{{ "user.nombre" }}</span>
-      </div>
-
-      <div class="user-row">
-        <span class="label">Rol:</span>
-        <span class="value">{{ "user.rol" }}</span>
-      </div>
-
-      <div class="user-row">
-        <span class="label">Fecha:</span>
-        <span class="value">{{ "user.fecha" }}</span>
-      </div>
-
-      <div class="user-actions">
-        <button class="btn-edt" [routerLink]="['/usuarios/usuario/form']">
-          <span class="material-symbols-outlined">edit</span>
-        </button>
-
-        <button class="btn-del">
-          <span class="material-symbols-outlined">delete_forever</span>
-        </button>
-      </div>
-
-    </div>
+     <router-outlet></router-outlet>
   </div>
 
-    <div class="btn-work">
-      <button class="btn-work-add" [routerLink]="['/usuarios/usuario/form']"  matTooltip="Nuevo Usuario">
-          NUEVO USUARIO
-      </button>
-    </div>
-  </div>
   
 </div>  
