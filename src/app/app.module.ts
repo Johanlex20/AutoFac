@@ -1,23 +1,21 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { provideHttpClient } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashBoardComponent } from './dash-board/dash-board.component';
-import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
-import { HomeComponent } from './home/home.component';
-import { MessagesComponent } from './messages/messages.component';
-import { RegistrosComponent } from './registros/registros.component';
-import { UserComponent } from './user/user.component';
 
-@NgModule({ declarations: [
-        AppComponent,
-        DashBoardComponent,
-        HomeComponent,
-        MessagesComponent,
-        RegistrosComponent,
-        UserComponent
-    ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        AppRoutingModule], providers: [provideHttpClient(withXhr(), withInterceptorsFromDi())] })
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+  ],
+  providers: [
+    provideHttpClient()
+  ],
+  bootstrap: [AppComponent]
+})
 export class AppModule { }
