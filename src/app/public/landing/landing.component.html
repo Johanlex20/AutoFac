@@ -1,0 +1,175 @@
+<!-- Nav -->
+<nav class="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 py-4 bg-background/90 backdrop-blur border-b border-border">
+  <span class="text-xl font-bold text-primary">AutoFacSigo</span>
+  <a
+    [routerLink]="['/login']"
+    class="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-secondary transition-colors duration-200 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+  >
+    Ingresar
+  </a>
+</nav>
+
+<!-- Hero -->
+<section class="relative overflow-hidden bg-background px-6 md:px-10 py-16 md:py-24">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div>
+      <h1 class="hero-animate text-4xl md:text-5xl font-bold text-foreground leading-tight">
+        Químicos para la industria de alimentos
+      </h1>
+      <p class="hero-animate mt-6 text-lg text-secondary max-w-xl">
+        Distribuimos productos químicos para plantas de alimentos, fábricas de producción, servicios de catering y restaurantes.
+      </p>
+      <div class="hero-animate mt-8 flex flex-wrap gap-4">
+        <a
+          href="#contacto"
+          class="px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-secondary transition-colors duration-200 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        >
+          Solicitar cotización
+        </a>
+        <a
+          href="#productos"
+          class="px-6 py-3 rounded-lg border border-border text-foreground font-medium hover:bg-muted transition-colors duration-200 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        >
+          Ver sectores
+        </a>
+      </div>
+    </div>
+
+    <!-- Panel visual del hero: placeholder mientras no hay imagen/video real. -->
+    <!-- TODO: reemplazar este div por <img> o <video> real en src/assets/ cuando esté disponible. -->
+    <div class="hero-animate relative rounded-2xl aspect-[4/3] bg-gradient-to-br from-primary via-secondary to-accent shadow-xl overflow-hidden">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15),transparent_60%)]"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Quiénes somos -->
+<section class="px-6 md:px-10 py-16 bg-white">
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="text-2xl md:text-3xl font-semibold text-foreground mb-4">Quiénes somos</h2>
+    <p class="text-secondary">
+      Somos una empresa dedicada a la distribución de insumos químicos para el sector alimenticio, garantizando calidad y cumplimiento normativo para nuestros clientes.
+    </p>
+  </div>
+</section>
+
+<!-- Por qué elegirnos -->
+<section class="px-6 md:px-10 py-16 md:py-20 bg-background">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-2xl md:text-3xl font-semibold text-foreground mb-10 text-center">Por qué elegirnos</h2>
+    <div class="stagger-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="stagger-item bg-white rounded-xl border border-border p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
+        <div class="w-11 h-11 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
+          </svg>
+        </div>
+        <h3 class="font-semibold text-foreground">Calidad garantizada</h3>
+        <p class="mt-2 text-sm text-secondary">Insumos que cumplen los estándares de calidad exigidos por el sector alimenticio.</p>
+      </div>
+
+      <div class="stagger-item bg-white rounded-xl border border-border p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
+        <div class="w-11 h-11 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
+            <circle cx="12" cy="12" r="9" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
+          </svg>
+        </div>
+        <h3 class="font-semibold text-foreground">Cumplimiento normativo</h3>
+        <p class="mt-2 text-sm text-secondary">Cumplimos la normativa vigente para insumos químicos del sector alimenticio.</p>
+      </div>
+
+      <div class="stagger-item bg-white rounded-xl border border-border p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
+        <div class="w-11 h-11 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h11v8H3z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 10h4l3 3v2h-7z" />
+            <circle cx="7" cy="17" r="1.5" />
+            <circle cx="17" cy="17" r="1.5" />
+          </svg>
+        </div>
+        <h3 class="font-semibold text-foreground">Distribución especializada</h3>
+        <p class="mt-2 text-sm text-secondary">Cobertura para plantas de alimentos, fábricas, catering y restaurantes.</p>
+      </div>
+
+      <div class="stagger-item bg-white rounded-xl border border-border p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
+        <div class="w-11 h-11 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 3h6" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 3v6l-5.5 9.5A1 1 0 005.36 20h13.28a1 1 0 00.86-1.5L14 9V3" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15h9" />
+          </svg>
+        </div>
+        <h3 class="font-semibold text-foreground">Soporte especializado</h3>
+        <p class="mt-2 text-sm text-secondary">Asesoría técnica para elegir el insumo correcto según tu operación.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sectores que atendemos -->
+<section id="productos" class="px-6 md:px-10 py-16 md:py-20 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-2xl md:text-3xl font-semibold text-foreground mb-10 text-center">Sectores que atendemos</h2>
+    <div class="stagger-group grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="stagger-item bg-background rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
+        <div class="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 3h6" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 3v6l-5.5 9.5A1 1 0 005.36 20h13.28a1 1 0 00.86-1.5L14 9V3" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15h9" />
+          </svg>
+        </div>
+        <h3 class="font-semibold text-foreground">Plantas de alimentos</h3>
+        <p class="mt-2 text-sm text-secondary">Químicos de limpieza y desinfección para procesos productivos alimentarios.</p>
+      </div>
+
+      <div class="stagger-item bg-background rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
+        <div class="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h11v8H3z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 10h4l3 3v2h-7z" />
+            <circle cx="7" cy="17" r="1.5" />
+            <circle cx="17" cy="17" r="1.5" />
+          </svg>
+        </div>
+        <h3 class="font-semibold text-foreground">Fábricas de producción</h3>
+        <p class="mt-2 text-sm text-secondary">Insumos químicos para procesos industriales de manufactura.</p>
+      </div>
+
+      <div class="stagger-item bg-background rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
+        <div class="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
+          </svg>
+        </div>
+        <h3 class="font-semibold text-foreground">Catering y restaurantes</h3>
+        <p class="mt-2 text-sm text-secondary">Productos de limpieza e higiene para servicios de alimentación.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="px-6 md:px-10 py-16 bg-background">
+  <div class="max-w-4xl mx-auto rounded-2xl bg-primary text-primary-foreground px-8 py-12 text-center shadow-xl">
+    <h2 class="text-2xl md:text-3xl font-semibold">¿Buscas un proveedor confiable de químicos industriales?</h2>
+    <p class="mt-4 text-primary-foreground/80 max-w-xl mx-auto">Escríbenos y te ayudamos a encontrar la solución adecuada para tu operación.</p>
+    <a
+      href="#contacto"
+      class="inline-block mt-8 px-6 py-3 rounded-lg bg-white text-primary font-medium hover:bg-muted transition-colors duration-200 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+    >
+      Solicitar cotización
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id="contacto" class="px-6 md:px-10 py-10 bg-foreground text-white/70 text-sm">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <span class="text-white font-semibold">AutoFacSigo</span>
+    <p>Contacto: correo@ejemplo.com | Tel: 000 000 0000</p>
+  </div>
+</footer>

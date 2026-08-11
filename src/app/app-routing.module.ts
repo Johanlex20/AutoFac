@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {
+ {
     path: '',
-    redirectTo: 'admin/home',
-    pathMatch: 'full'
+    loadChildren: () => import('./public/public.module').then(m => m.PublicModule)
   },
   {
     path: 'admin',
