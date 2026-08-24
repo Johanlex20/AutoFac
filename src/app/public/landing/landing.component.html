@@ -1,47 +1,29 @@
-<!-- Nav -->
-<nav class="sticky top-0 z-50 flex items-center justify-between px-6 md:px-10 py-4 bg-background/90 backdrop-blur border-b border-border">
-  <span class="text-xl font-bold text-primary">AutoFacSigo</span>
-  <a
-    [routerLink]="['/login']"
-    class="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-secondary transition-colors duration-200 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-  >
-    Ingresar
-  </a>
-</nav>
+
 
 <!-- Hero -->
-<section class="relative overflow-hidden bg-background px-6 md:px-10 py-16 md:py-24">
-  <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-    <div>
-      <h1 class="hero-animate text-4xl md:text-5xl font-bold text-foreground leading-tight">
-        Químicos para la industria de alimentos
-      </h1>
-      <p class="hero-animate mt-6 text-lg text-secondary max-w-xl">
-        Distribuimos productos químicos para plantas de alimentos, fábricas de producción, servicios de catering y restaurantes.
-      </p>
-      <div class="hero-animate mt-8 flex flex-wrap gap-4">
-        <a
-          href="#contacto"
-          class="px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-secondary transition-colors duration-200 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-        >
-          Solicitar cotización
-        </a>
-        <a
-          href="#productos"
-          class="px-6 py-3 rounded-lg border border-border text-foreground font-medium hover:bg-muted transition-colors duration-200 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-        >
-          Ver sectores
-        </a>
-      </div>
+<section class="landing-hero">
+  <!-- Nav -->
+  <nav class="landing-nav">
+    <span class="text-xl font-bold">AutoFacSigo</span>
+    <div class="landing-nav-links">
+      <a href="#quienes-somos" class="landing-nav-link">Quiénes somos</a>
+      <a href="#productos" class="landing-nav-link">Productos</a>
+      <a [routerLink]="['/documentos']" class="landing-nav-link">Documentos</a>
+      <a href="#contacto" class="landing-nav-link">Contacto</a>
     </div>
+    <a [routerLink]="['/login']" class="landing-nav-cta">Ingresar</a>
+  </nav>
 
-    <!-- Panel visual del hero: placeholder mientras no hay imagen/video real. -->
-    <!-- TODO: reemplazar este div por <img> o <video> real en src/assets/ cuando esté disponible. -->
-    <div class="hero-animate relative rounded-2xl aspect-[4/3] bg-gradient-to-br from-primary via-secondary to-accent shadow-xl overflow-hidden">
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15),transparent_60%)]"></div>
-    </div>
+  <div class="landing-hero-overlay"></div>
+  <div class="landing-hero-content">
+    <h1 class="hero-animate landing-hero-title">Químicos para la industria de alimentos</h1>
+    <p class="hero-animate landing-hero-subtitle">
+      Distribuimos productos químicos para plantas de alimentos, fábricas de producción, servicios de catering y restaurantes.
+    </p>
+    <a href="#contacto" class="hero-animate landing-hero-cta">Solicitar cotización</a>
   </div>
 </section>
+
 
 <!-- Quiénes somos -->
 <section class="px-6 md:px-10 py-16 bg-white">

@@ -1,86 +1,88 @@
-<div class="container-custom">
-  
-    <div class="sideBar" [ngClass]="{ active: isSidebarActive }">
-      
-      <div class="toggle" [ngClass]="{ active: isSidebarActive }" (click)="toggleSidebar()">
-        <span class="material-symbols-outlined icon open"> menu </span>
-        <span class="material-symbols-outlined icon close"> close </span>
+<div class="app-bg">
+  <div class="container-custom">
+    
+      <div class="sideBar" [ngClass]="{ active: isSidebarActive }">
+        
+        <div class="toggle" [ngClass]="{ active: isSidebarActive }" (click)="toggleSidebar()">
+          <span class="material-symbols-outlined icon open"> menu </span>
+          <span class="material-symbols-outlined icon close"> close </span>
+        </div>
+        
+        <ul>
+              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <b></b>
+                  <b></b>
+                  <a [routerLink]="['/admin/home']">
+                      <span class="material-symbols-outlined icon">home</span>
+                      <span class="title">Home</span>
+                  </a>
+              </li>
+              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <b></b>
+                  <b></b>
+                  <a [routerLink]="['/admin/registros/list']">
+                      <span class="material-symbols-outlined icon"> checkbook </span>
+                      <span class="title">Registros</span>
+                  </a>
+              </li>
+              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <b></b>
+                  <b></b>
+                  <a [routerLink]="['/admin/usuarios/list']">
+                      <span class="material-symbols-outlined icon">face </span>
+                      <span class="title">Profile</span>
+                  </a>
+              </li>
+              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <b></b>
+                  <b></b>
+                  <a [routerLink]="['/admin/messages/list']" >
+                      <span class="material-symbols-outlined icon"> notifications_unread </span> 
+                      <span class="title">Messages</span>
+                  </a>
+              </li>
+              <!--
+              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <b></b>
+                  <b></b>
+                  <a [routerLink]="['/admin/settings']" >                    
+                    <span class="material-symbols-outlined icon"> settings </span>
+                      <span class="title">Setting</span>
+                  </a>
+              </li>
+              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <b></b>
+                  <b></b>
+                  <a [routerLink]="['/admin/help']" >                   
+                    <span class="material-symbols-outlined icon"> help </span>
+                    <span class="title">Help</span>
+                  </a>
+              </li>
+              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <b></b>
+                  <b></b>
+                  <a [routerLink]="['/admin/password']">
+                      <span class="material-symbols-outlined icon"> key_vertical </span>
+                      <span class="title">Password</span>
+                  </a>
+              </li>
+              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <b></b>
+                  <b></b>
+                  <a [routerLink]="['/sing-out']">
+                      <span class="material-symbols-outlined icon"> mode_off_on</span>
+                      <span class="title">Sing Out</span>
+                  </a>
+              </li>
+          -->
+        </ul>
       </div>
-      
-      <ul>
-            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <b></b>
-                <b></b>
-                <a [routerLink]="['/admin/home']">
-                    <span class="material-symbols-outlined icon">home</span>
-                    <span class="title">Home</span>
-                </a>
-            </li>
-            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <b></b>
-                <b></b>
-                 <a [routerLink]="['/admin/registros/list']">
-                    <span class="material-symbols-outlined icon"> checkbook </span>
-                    <span class="title">Registros</span>
-                </a>
-            </li>
-            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <b></b>
-                <b></b>
-                 <a [routerLink]="['/admin/usuarios/list']">
-                    <span class="material-symbols-outlined icon">face </span>
-                    <span class="title">Profile</span>
-                </a>
-            </li>
-            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <b></b>
-                <b></b>
-                <a [routerLink]="['/admin/messages/list']" >
-                    <span class="material-symbols-outlined icon"> notifications_unread </span> 
-                    <span class="title">Messages</span>
-                </a>
-            </li>
-            <!--
-            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <b></b>
-                <b></b>
-                <a [routerLink]="['/admin/settings']" >                    
-                  <span class="material-symbols-outlined icon"> settings </span>
-                    <span class="title">Setting</span>
-                </a>
-            </li>
-            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <b></b>
-                <b></b>
-                <a [routerLink]="['/admin/help']" >                   
-                  <span class="material-symbols-outlined icon"> help </span>
-                  <span class="title">Help</span>
-                </a>
-            </li>
-            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <b></b>
-                <b></b>
-                <a [routerLink]="['/admin/password']">
-                    <span class="material-symbols-outlined icon"> key_vertical </span>
-                    <span class="title">Password</span>
-                </a>
-            </li>
-            <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <b></b>
-                <b></b>
-                <a [routerLink]="['/sing-out']">
-                    <span class="material-symbols-outlined icon"> mode_off_on</span>
-                    <span class="title">Sing Out</span>
-                </a>
-            </li>
-        -->
-      </ul>
+    
+
+    <div class="area-work" [ngClass]="{ 'expanded': isSidebarActive }">
+      <router-outlet></router-outlet>
     </div>
-   
 
-  <div class="area-work" [ngClass]="{ 'expanded': isSidebarActive }">
-     <router-outlet></router-outlet>
-  </div>
-
-  
-</div>  
+    
+  </div>  
+</div>

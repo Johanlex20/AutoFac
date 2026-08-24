@@ -202,6 +202,52 @@ background: #ff4d89;
     display: none;
 }
 
+/* ===============================
+    LANDING - HERO
+================================ */
+
+.landing-nav {
+  @apply absolute top-0 inset-x-0 z-20 flex items-center justify-between px-6 md:px-10 py-5 text-white;
+}
+
+.landing-nav-links {
+  @apply hidden md:flex items-center gap-8 text-sm font-medium;
+}
+
+.landing-nav-link {
+  @apply text-white/90 hover:text-white transition-colors duration-200 cursor-pointer;
+}
+
+.landing-nav-cta {
+  @apply px-5 py-2 border border-white/70 text-white text-sm font-medium hover:bg-white hover:text-foreground transition-colors duration-200 cursor-pointer;
+}
+
+.landing-hero {
+  @apply relative flex items-center justify-center text-center min-h-screen bg-cover bg-center bg-no-repeat;
+  background-image: url('/assets/img/f1.jpeg');
+}
+
+.landing-hero-overlay {
+  @apply absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60;
+}
+
+.landing-hero-content {
+  @apply relative z-10 max-w-3xl px-6;
+}
+
+.landing-hero-title {
+  @apply text-5xl md:text-7xl font-bold text-white leading-tight tracking-tight;
+}
+
+.landing-hero-subtitle {
+  @apply mt-6 text-lg text-white/85 max-w-xl mx-auto;
+}
+
+.landing-hero-cta {
+  @apply inline-block mt-10 px-8 py-3 border border-white text-white text-sm font-medium tracking-wide uppercase hover:bg-white hover:text-foreground transition-colors duration-200 cursor-pointer;
+}
+
+
 
 /* ===============================
         AREA DE TRABAJO
