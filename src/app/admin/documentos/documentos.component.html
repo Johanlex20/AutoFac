@@ -1,0 +1,58 @@
+<div class="admin-documentos">
+  <div class="admin-documentos-header">
+    <h1 class="admin-documentos-title">Documentos</h1>
+    <p class="admin-documentos-subtitle">{{ documentos.length }} archivo(s) disponible(s)</p>
+  </div>
+
+  <div *ngIf="!documentoEnEdicion" class="admin-documentos-upload">
+    <input type="file" #fileInput (change)="onArchivoSeleccionado($event)" class="admin-documentos-file-input" />
+    <button (click)="subir()" [disabled]="!archivoSeleccionado || subiendo" class="admin-documentos-upload-btn">
+      {{ subiendo ? 'Subiendo...' : 'Subir documento' }}
+    </button>
+  </div>
+
+  <div *ngIf="documentoEnEdicion" class="admin-documentos-edit">
+    <p class="admin-documentos-edit-title">Editando: {{ documentoEnEdicion.nombreOriginal }}</p>
+    <input type="text" [(ngModel)]="nombreEditado" placeholder="Nombre del documento" class="admin-documentos-edit-input" />
+    <input type="file" #fileInputEdit (change)="onArchivoEditado($event)" class="admin-documentos-file-input" />
+    <div class="admin-documentos-edit-actions">
+      <button (click)="guardarEdicion()" [disabled]="subiendo" class="admin-documentos-upload-btn">
+        {{ subiendo ? 'Guardando...' : 'Guardar cambios' }}
+      </button>
+      <button (click)="cancelarEdicion()" class="admin-documentos-cancel-btn">Cancelar</button>
+    </div>
+  </div>
+
+  <div *ngIf="subiendo" class="admin-documentos-progress">
+    <div class="admin-documentos-progress-bar" [style.width.%]="progreso"></div>
+  </div>
+
+  <div *ngIf="cargando" class="admin-documentos-empty">Cargando documentos...</div>
+  <div *ngIf="!cargando && documentos.length === 0" class="admin-documentos-empty">
+    Todavía no hay documentos subidos.
+  </div>
+
+  <table *ngIf="!cargando && documentos.length > 0" class="admin-documentos-table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Tamaño</th>
+        <th>Fecha</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let doc of documentos">
+        <td>{{ doc.nombreOriginal }}</td>
+        <td>{{ formatoTamano(doc.tamanoBytes) }}</td>
+        <td>{{ doc.fechaSubida | date: 'dd/MM/yyyy, h:mm a' }}</td>
+        <td><a [href]="descargarUrl(doc)" class="admin-documentos-download">Descargar</a></td>
+        <td class="admin-documentos-actions-cell">
+          <button (click)="iniciarEdicion(doc)" class="admin-documentos-action-btn">Editar</button>
+          <button (click)="eliminar(doc)" class="admin-documentos-action-btn admin-documentos-action-delete">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

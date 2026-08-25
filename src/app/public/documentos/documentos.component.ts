@@ -41,18 +41,18 @@ export class DocumentosComponent implements OnInit {
   colorBadge(nombre: string): string {
     const ext = this.extension(nombre).toLowerCase();
     const colores: { [key: string]: string } = {
-      pdf: 'bg-red-100 text-red-600',
-      doc: 'bg-blue-100 text-blue-600',
-      docx: 'bg-blue-100 text-blue-600',
-      xls: 'bg-green-100 text-green-600',
-      xlsx: 'bg-green-100 text-green-600',
-      ppt: 'bg-orange-100 text-orange-600',
-      pptx: 'bg-orange-100 text-orange-600',
-      png: 'bg-purple-100 text-purple-600',
-      jpg: 'bg-purple-100 text-purple-600',
-      jpeg: 'bg-purple-100 text-purple-600'
+      pdf: 'documentos-badge-pdf',
+      doc: 'documentos-badge-doc',
+      docx: 'documentos-badge-doc',
+      xls: 'documentos-badge-xls',
+      xlsx: 'documentos-badge-xls',
+      ppt: 'documentos-badge-ppt',
+      pptx: 'documentos-badge-ppt',
+      png: 'documentos-badge-img',
+      jpg: 'documentos-badge-img',
+      jpeg: 'documentos-badge-img'
     };
-    return colores[ext] ?? 'bg-gray-100 text-gray-600';
+    return colores[ext] ?? 'documentos-badge-default';
   }
 
   formatoTamano(bytes: number): string {

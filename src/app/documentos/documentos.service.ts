@@ -30,4 +30,24 @@ export class DocumentosService {
   descargarUrl(documento: Documento): string {
     return `${this.url}/${documento.id}/descargar`;
   }
+
+  eliminar(documento: Documento): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${documento.id}`);
+  }
+
+  actualizar(documento: Documento, nombreOriginal?: string, archivo?: File): Observable<HttpEvent<Documento>> {
+    const formData = new FormData();
+    if (nombreOriginal) {
+      formData.append('nombreOriginal', nombreOriginal);
+    }
+    if (archivo) {
+      formData.append('archivo', archivo);
+    }
+
+    return this.http.put<Documento>(`${this.url}/${documento.id}`, formData, {
+      reportProgress: true,
+      observe: 'events'
+    });
+  }
+
 }

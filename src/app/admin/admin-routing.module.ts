@@ -5,6 +5,7 @@ import { HomeComponent } from '../home/home.component';
 import { MessagesComponent } from '../messages/messages.component';
 import { RegistrosComponent } from '../registros/registros.component';
 import { UserComponent } from '../user/user.component';
+import { DocumentosComponent } from '../admin/documentos/documentos.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: 'registros/list', component: RegistrosComponent },
       { path: 'messages/list', component: MessagesComponent },
       { path: 'usuarios/list', component: UserComponent },
+      { path: 'documentos/list', component: DocumentosComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   }

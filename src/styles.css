@@ -507,6 +507,185 @@ background: #ff4d89;
 }
 
 
+/* ===============================
+    ADMIN - DOCUMENTOS
+================================ */
+
+.admin-documentos {
+  @apply p-2;
+}
+
+.admin-documentos-header {
+  @apply mb-6;
+}
+
+.admin-documentos-title {
+  @apply text-2xl font-bold text-blue-dark;
+}
+
+.admin-documentos-subtitle {
+  @apply text-sm text-gray-500;
+}
+
+.admin-documentos-upload {
+  @apply flex flex-wrap items-center gap-3 mb-4;
+}
+
+.admin-documentos-file-input {
+  @apply text-sm;
+}
+
+.admin-documentos-upload-btn {
+  @apply px-4 py-2 rounded-lg bg-blue-main text-white text-sm font-medium hover:bg-blue-dark-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer;
+}
+
+.admin-documentos-progress {
+  @apply w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-4;
+}
+
+.admin-documentos-progress-bar {
+  @apply h-full bg-blue-main transition-all duration-200;
+}
+
+.admin-documentos-empty {
+  @apply text-gray-500 text-sm;
+}
+
+.admin-documentos-table {
+  @apply w-full text-sm border-collapse;
+}
+
+.admin-documentos-table th {
+  @apply text-left text-xs font-semibold text-gray-500 uppercase pb-2 border-b border-gray-200;
+}
+
+.admin-documentos-table td {
+  @apply py-2 border-b border-gray-100;
+}
+
+.admin-documentos-download {
+  @apply text-blue-main font-medium hover:underline cursor-pointer;
+}
+
+.admin-documentos-edit {
+  @apply mb-4 p-4 rounded-lg border border-blue-light bg-blue-light-very flex flex-wrap items-center gap-3;
+}
+
+.admin-documentos-edit-title {
+  @apply w-full text-sm font-medium text-blue-dark;
+}
+
+.admin-documentos-edit-input {
+  @apply px-3 py-2 rounded-lg border border-gray-300 text-sm;
+}
+
+.admin-documentos-edit-actions {
+  @apply flex gap-2;
+}
+
+.admin-documentos-cancel-btn {
+  @apply px-4 py-2 rounded-lg border border-gray-300 text-gray-600 text-sm font-medium hover:bg-gray-100 transition-colors duration-200 cursor-pointer;
+}
+
+.admin-documentos-actions-cell {
+  @apply flex gap-2;
+}
+
+.admin-documentos-action-btn {
+  @apply px-3 py-1 rounded-lg text-xs font-medium border border-gray-300 text-gray-600 hover:bg-gray-100 transition-colors duration-200 cursor-pointer;
+}
+
+.admin-documentos-action-delete {
+  @apply border-red-300 text-red-600 hover:bg-red-50;
+}
+
+
+/* ===============================
+    DOCUMENTOS (público)
+================================ */
+
+.documentos-page {
+  @apply min-h-screen bg-gray-50 px-6 py-10;
+}
+
+.documentos-container {
+  @apply mx-auto max-w-6xl;
+}
+
+.documentos-header {
+  @apply mb-8;
+}
+
+.documentos-title {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+.documentos-subtitle {
+  @apply text-sm text-gray-500;
+}
+
+.documentos-empty {
+  @apply text-gray-500;
+}
+
+.documentos-grid {
+  @apply grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+}
+
+.documentos-card {
+  @apply rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md;
+}
+
+.documentos-card-header {
+  @apply flex items-start justify-between;
+}
+
+.documentos-badge {
+  @apply flex h-10 w-10 items-center justify-center rounded-lg text-xs font-semibold;
+}
+
+.documentos-badge-pdf {
+  @apply bg-red-100 text-red-600;
+}
+
+.documentos-badge-doc {
+  @apply bg-blue-100 text-blue-600;
+}
+
+.documentos-badge-xls {
+  @apply bg-green-100 text-green-600;
+}
+
+.documentos-badge-ppt {
+  @apply bg-orange-100 text-orange-600;
+}
+
+.documentos-badge-img {
+  @apply bg-purple-100 text-purple-600;
+}
+
+.documentos-badge-default {
+  @apply bg-gray-100 text-gray-600;
+}
+
+.documentos-card-size {
+  @apply text-xs text-gray-400;
+}
+
+.documentos-card-name {
+  @apply mt-3 truncate text-sm font-medium text-gray-800;
+}
+
+.documentos-card-date {
+  @apply text-xs text-gray-400;
+}
+
+.documentos-card-download {
+  @apply mt-4 inline-flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-700 cursor-pointer;
+}
+
+
+
 
 
 /* =============================
