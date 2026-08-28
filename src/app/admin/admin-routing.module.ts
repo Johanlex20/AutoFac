@@ -6,11 +6,15 @@ import { MessagesComponent } from '../messages/messages.component';
 import { RegistrosComponent } from '../registros/registros.component';
 import { UserComponent } from '../user/user.component';
 import { DocumentosComponent } from '../admin/documentos/documentos.component';
+import { LoginComponent } from './login/login.component';
+import { authGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
+  { path: 'login', component: LoginComponent },
   {
     path: '',
     component: DashBoardComponent,
+    canActivate: [authGuard],
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'registros/list', component: RegistrosComponent },
