@@ -8,6 +8,8 @@ Lista viva de tareas de diseño/frontend. Se actualiza a medida que avanzamos o 
 
 ## Pendiente / próximo
 
+- [ ] **Responsive de las tablas** (ej. `registros`, `table-custom`) — revisar que se vean bien en pantallas chicas.
+- [ ] **Responsive de la vista de documentos** (grid pública y panel admin) — revisar en pantallas chicas.
 - [ ] **Botón/link para volver al home** en la vista pública de documentos (`/documentos`) — hoy no hay forma de regresar a la landing, el usuario queda "atrapado" ahí.
 - [ ] **Reorganizar "Home" del panel admin**: hoy `/admin/home` muestra el botón de capturar factura (Siigo). La idea es que el link "Home" del sidebar admin lleve a la landing pública, y la funcionalidad de captura de facturas se mueva a su propio ítem del menú (con su propio nombre, no "Home") — hay que decidir el nombre y si es un componente nuevo o solo renombrar/mover el existente.
 - [ ] **Optimizar imágenes al subir documentos**: cuando el archivo subido sea una imagen, convertirla automáticamente a formato optimizado (`.webp` u otro) en vez de guardar el original tal cual — reduce peso y mejora carga. Se implementaría en `DocumentoService.guardar()` (backend), probablemente con una librería de procesamiento de imágenes en Java (ej. `Thumbnailator`, o `ImageIO` con un encoder webp).
@@ -26,14 +28,14 @@ Lista viva de tareas de diseño/frontend. Se actualiza a medida que avanzamos o 
 - [ ] **(Futuro, hardening) Evaluar mover el JWT de `localStorage` a una cookie `httpOnly`** — hoy el token vive en `localStorage`, vulnerable solo ante XSS (no ante acceso externo directo). Cambiar a cookie `httpOnly` lo protege de XSS pero exige manejar CSRF en su lugar — evaluar si vale la pena para el alcance de este proyecto.
 - [ ] **(Backend) Sacar los orígenes de CORS a variables de entorno**: hoy en `SecurityConfig.corsConfigurationSource()` las URLs (`http://localhost:4200`, `https://autofac.modoblu.com`) están escritas directo en el código. Pasarlas a `application.properties` como `${CORS_ORIGINS:...}` (lista separada por comas) para no tener que tocar y recompilar código Java cuando cambie el dominio — recordar que `modoblu.com` vence ~sep. 2026 y ya hay plan de migración a otro dominio.
 
-## En progreso ahora (auth)
+## En progreso ahora
 
-- [x] **Backend de login + autenticación (Spring Security + JWT)** — hecho y verificado con Insomnia: `POST /api/auth/login` genera un JWT real (firmado con `JWT_SECRET`), `iUsuarioRepository`/`Usuario`/`UsuarioDetailsService`/`JwtService`/`JwtAuthFilter`/`SecurityConfig` funcionando. Verificado: sin token `GET /api/data/list` → 401; con token Bearer → 200. Rutas `GET /api/documento/**` y `/api/auth/**` siguen públicas a propósito, todo lo demás requiere token. `AdminSeeder` crea el primer usuario admin desde `ADMIN_EMAIL`/`ADMIN_PASSWORD` (una sola vez, si la tabla `usuario` está vacía).
-- [ ] **Frontend: conectar el login real** — `AuthService` (login, guardar token, logout), interceptor HTTP que agregue `Authorization: Bearer` automáticamente, `authGuard` para bloquear rutas `/admin/**` sin sesión, y la vista de login ya conectada al endpoint real (no el stub simulado).
-  - Requisito confirmado: cerrar sesión automáticamente por inactividad (tiempo sin actividad del usuario) — se implementa en el frontend con un timer que resetea con eventos de mouse/teclado.
-  - Aclarado: "entre navegadores" solo significa que un navegador donde nunca se hizo login no debe tener acceso — ya cubierto de forma natural por JWT + `localStorage` (cada navegador tiene su propio storage). No se requiere invalidar sesiones activas en otros navegadores (eso rompería el modelo stateless de JWT y no hace falta para este caso).
+- [ ] Nada activo ahora mismo — elegir siguiente ítem de "Pendiente / próximo".
 
 ## Ya hecho (contexto, no repetir)
+
+- **Login + autenticación completos (backend y frontend)**: `POST /api/auth/login` genera JWT real (Spring Security + JWT), `iUsuarioRepository`/`Usuario`/`UsuarioDetailsService`/`JwtService`/`JwtAuthFilter`/`SecurityConfig`. Frontend: `AuthService`, `authInterceptor`, `authGuard` (bloquea `/admin/**` sin sesión, redirige a `/admin/login`), `LoginComponent` con validaciones. Verificado de punta a punta con Insomnia y por UI.
+- **Auto-logout por inactividad + botón "Cerrar sesión"**: `InactivityService` (timer de 15 min, se resetea con mouse/teclado/click/scroll), wireado en `dash-board.component.ts`. Botón de logout como `<div class="sideBar-logout">` independiente (hermano de `<ul>` dentro de `.sideBar`, no como `<li>` del menú) — solo visible si `authService.isAuthenticated()`, con el mismo efecto de curva blanca que el resto del sidebar (arriba y abajo) activado en hover, alineación de ícono/texto corregida. Se corrigió también un bug de scrollbar en el sidebar (`overflow-x: hidden` sin `overflow-y` hace que el navegador calcule `overflow-y: auto` automáticamente — se agregó `overflow-y: hidden` explícito).
 
 - Auditoría de seguridad inicial (credenciales fuera del código), actualización de Angular 15 → 22, separación de rutas público/admin, despliegue Docker funcionando en el servidor (ver plan principal para el detalle completo).
 - Módulo `documentos` (público): backend completo (subir/listar/descargar) + grid pública de archivos funcionando.

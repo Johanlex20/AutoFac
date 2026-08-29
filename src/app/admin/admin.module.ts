@@ -3,15 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { DashBoardComponent } from '../dash-board/dash-board.component';
-import { HomeComponent } from '../home/home.component';
+import { CapturaComponent} from '../captura/captura.component';
 import { MessagesComponent } from '../messages/messages.component';
 import { RegistrosComponent } from '../registros/registros.component';
 import { UserComponent } from '../user/user.component';
 
+
 @NgModule({
   declarations: [
     DashBoardComponent,
-    HomeComponent,
+    CapturaComponent,
     MessagesComponent,
     RegistrosComponent,
     UserComponent

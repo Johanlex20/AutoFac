@@ -2,13 +2,13 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CapturaServiceService } from './captura-service.service';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
+    selector: 'app-captura',
+    templateUrl: './captura.component.html',
     styleUrls: [],
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
-export class HomeComponent implements OnInit {
+export class CapturaComponent implements OnInit {
 
   constructor( private capturaService: CapturaServiceService) { }
 

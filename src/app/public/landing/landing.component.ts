@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { AuthService } from '../../auth/auth.service';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,7 +13,18 @@ gsap.registerPlugin(ScrollTrigger);
   styleUrl: './landing.component.css',
 })
 export class LandingComponent implements AfterViewInit, OnDestroy {
-  constructor(private host: ElementRef<HTMLElement>) {}
+  constructor(
+    private host: ElementRef<HTMLElement>,
+    private authService: AuthService
+  ) {}
+
+  estaAutenticado(): boolean {
+    return this.authService.isAuthenticated();
+  }
+
+  cerrarSesion(): void {
+    this.authService.logout();
+  }
 
   ngAfterViewInit(): void {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

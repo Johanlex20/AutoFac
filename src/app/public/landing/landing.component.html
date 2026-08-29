@@ -11,7 +11,16 @@
       <a [routerLink]="['/documentos']" class="landing-nav-link">Documentos</a>
       <a href="#contacto" class="landing-nav-link">Contacto</a>
     </div>
-    <a [routerLink]="['/login']" class="landing-nav-cta">Ingresar</a>
+    <!-- Auth Links boton login -->
+     @if (estaAutenticado()) {
+      <div class="landing-nav-auth">
+        <a [routerLink]="['/admin/home']" class="landing-nav-dashboard">Dashboard</a>
+        <a (click)="cerrarSesion()" class="landing-nav-cta">Cerrar sesión</a>
+      </div>
+    } @else {
+      <a [routerLink]="['/admin/login']" class="landing-nav-cta">Ingresar</a>
+    }
+
   </nav>
 
   <div class="landing-hero-overlay"></div>

@@ -9,12 +9,28 @@
         </div>
         
         <ul>
+              <li class="list">
+                  <b></b>
+                  <b></b>
+                  <a [routerLink]="['/']">
+                      <span class="material-symbols-outlined icon">home</span>
+                      <span class="title">Inicio</span>
+                  </a>
+              </li>
               <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                   <b></b>
                   <b></b>
                   <a [routerLink]="['/admin/home']">
-                      <span class="material-symbols-outlined icon">home</span>
+                      <span class="material-symbols-outlined icon">dashboard</span>
                       <span class="title">Home</span>
+                  </a>
+              </li>
+              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <b></b>
+                  <b></b>
+                  <a [routerLink]="['/admin/captura']">
+                      <span class="material-symbols-outlined icon">receipt_long</span>
+                      <span class="title">Captura</span>
                   </a>
               </li>
               <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
@@ -49,42 +65,16 @@
                       <span class="title">Documentos</span>
                   </a>
               </li>
-
-              <!--
-              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                  <b></b>
-                  <b></b>
-                  <a [routerLink]="['/admin/settings']" >                    
-                    <span class="material-symbols-outlined icon"> settings </span>
-                      <span class="title">Setting</span>
-                  </a>
-              </li>
-              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                  <b></b>
-                  <b></b>
-                  <a [routerLink]="['/admin/help']" >                   
-                    <span class="material-symbols-outlined icon"> help </span>
-                    <span class="title">Help</span>
-                  </a>
-              </li>
-              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                  <b></b>
-                  <b></b>
-                  <a [routerLink]="['/admin/password']">
-                      <span class="material-symbols-outlined icon"> key_vertical </span>
-                      <span class="title">Password</span>
-                  </a>
-              </li>
-              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                  <b></b>
-                  <b></b>
-                  <a [routerLink]="['/sing-out']">
-                      <span class="material-symbols-outlined icon"> mode_off_on</span>
-                      <span class="title">Sing Out</span>
-                  </a>
-              </li>
-          -->
         </ul>
+
+        @if (estaAutenticado()) {
+          <div class="sideBar-logout" (click)="cerrarSesion()">
+              <b></b>
+              <b></b>
+              <span class="material-symbols-outlined icon"> logout </span>
+              <span class="title"> Cerrar sesión </span>
+          </div>
+        }
       </div>
     
 
