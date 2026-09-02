@@ -2,7 +2,7 @@
   <h1>Capturar Data</h1>
   <button (click)="capturar()">Capturar</button>
   @if (mensaje) {
-    <p class="success">
+    <p [class]="esError ? 'captura-alert-error' : 'success'">
       {{ mensaje }}
     </p>
   }

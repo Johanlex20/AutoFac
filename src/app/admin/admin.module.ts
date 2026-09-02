@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { DashBoardComponent } from '../dash-board/dash-board.component';
@@ -19,6 +20,7 @@ import { UserComponent } from '../user/user.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     AdminRoutingModule
   ]
 })

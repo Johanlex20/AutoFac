@@ -2,110 +2,226 @@
   <div class="titulo-dashboard">
     <h1>Registros</h1>
   </div>
-  <div class="tabla-wrapper">
-    <table class="table-custom hidden md:table">
-      <thead >
-        <tr >
-          <th>Id</th>
-          <th>N.Factura</th>
-          <th>Cliente</th>
-          <th>Nit</th>
-          <th>V. Total</th>
-          <th>M. Pago</th>
-          <th>Botones</th>
-        </tr>
-      </thead>
-      <tbody >
-        @for (data of dataObj; track data) {
-          <tr class="table-row">
-            <td>
-              <div>{{data.id}}</div>
-            </td>
-            <td>
-              <div>{{data.numeroFactura}}</div>
-            </td>
-            <td>
-              <div>{{data.cliente}}</div>
-            </td>
-            <td>
-              <div>{{data.nit}}</div>
-            </td>
-            <td>
-              <div>{{data.valorTotal}}</div>
-            </td>
-            <td>
-              <div>{{data.medioPago}}</div>
-            </td>
-            <td>
-              <div class="btn-table">
-                <button class="btn-edt"   matTooltip="Editar Registro">
-                  <span class="material-symbols-outlined"> edit </span>
-                </button>
-                <button class="btn-del" matTooltip="Eliminar Registro">
-                  <span class="material-symbols-outlined"> delete_forever </span>
-                </button>
-              </div>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  </div>
 
-  <div class="block md:hidden mobile-container">
-    @for (data of dataObj; track data) {
-      <div class="user-card">
-        <div class="user-row">
-          <span class="label">Id:</span>
-          <span class="value">{{ data.id }}</span>
+  @if (formularioEdicion) {
+    <div class="registros-edit-page">
+      <div class="registros-edit-card">
+        <div class="registros-edit-header">
+          <h2 class="registros-edit-heading">{{ modoCreacion ? 'Nuevo registro' : 'Editar factura' }}</h2>
+          @if (!modoCreacion) {
+            <p class="registros-edit-subheading">{{ registroEnEdicion?.numeroFactura }}</p>
+          }
         </div>
-        <div class="user-row">
-          <span class="label">factura:</span>
-          <span class="value">{{ data.numeroFactura }}</span>
+
+        @if (mensajeError) {
+          <p class="registros-edit-error">{{ mensajeError }}</p>
+        }
+
+        <div class="registros-edit-grid">
+          <div class="registros-edit-field">
+            <label class="registros-edit-label">N. Factura</label>
+            <input class="registros-edit-input" [(ngModel)]="formularioEdicion.numeroFactura" required />
+            @if (camposFaltantes['numeroFactura']) {
+              <p class="registros-edit-field-error">El número de factura es obligatorio.</p>
+            }
+          </div>
+          <div class="registros-edit-field">
+            <label class="registros-edit-label">Cliente</label>
+            <input class="registros-edit-input" [(ngModel)]="formularioEdicion.cliente" required />
+            @if (camposFaltantes['cliente']) {
+              <p class="registros-edit-field-error">El cliente es obligatorio.</p>
+            }
+          </div>
+          <div class="registros-edit-field">
+            <label class="registros-edit-label">Nit</label>
+            <input class="registros-edit-input" [(ngModel)]="formularioEdicion.nit" required />
+            @if (camposFaltantes['nit']) {
+              <p class="registros-edit-field-error">El nit es obligatorio.</p>
+            }
+          </div>
+          <div class="registros-edit-field">
+            <label class="registros-edit-label">F. Generación</label>
+            <input type="date" class="registros-edit-input" [(ngModel)]="formularioEdicion.fechaGeneracion" required />
+            @if (camposFaltantes['fechaGeneracion']) {
+              <p class="registros-edit-field-error">La fecha de generación es obligatoria.</p>
+            }
+          </div>
+          <div class="registros-edit-field">
+            <label class="registros-edit-label">F. Vencimiento</label>
+            <input type="date" class="registros-edit-input" [(ngModel)]="formularioEdicion.fechaVencimiento" required />
+            @if (camposFaltantes['fechaVencimiento']) {
+              <p class="registros-edit-field-error">La fecha de vencimiento es obligatoria.</p>
+            }
+          </div>
+          <div class="registros-edit-field">
+            <label class="registros-edit-label">V. Total</label>
+            <input class="registros-edit-input" [(ngModel)]="formularioEdicion.valorTotal" required />
+            @if (camposFaltantes['valorTotal']) {
+              <p class="registros-edit-field-error">El valor total es obligatorio.</p>
+            } @else if (valorTotalInvalido) {
+              <p class="registros-edit-field-error">Debe ser un número válido (ej. 150000 o 150,000.00).</p>
+            }
+          </div>
+          <div class="registros-edit-field">
+            <label class="registros-edit-label">Forma de pago</label>
+            <select class="registros-edit-input" [(ngModel)]="formularioEdicion.formaPago" required>
+              <option value="" disabled>Selecciona una opción</option>
+              <option value="Contado">Contado</option>
+              <option value="Crédito">Crédito</option>
+            </select>
+            @if (camposFaltantes['formaPago']) {
+              <p class="registros-edit-field-error">La forma de pago es obligatoria.</p>
+            }
+          </div>
+          <div class="registros-edit-field">
+            <label class="registros-edit-label">Medio de pago</label>
+            <select class="registros-edit-input" [(ngModel)]="formularioEdicion.medioPago" required>
+              <option value="" disabled>Selecciona una opción</option>
+              <option value="Efectivo">Efectivo</option>
+              <option value="Transferencia">Transferencia</option>
+              <option value="Cheque">Cheque</option>
+              <option value="Tarjeta de crédito">Tarjeta de crédito</option>
+              <option value="Consignación">Consignación</option>
+            </select>
+            @if (camposFaltantes['medioPago']) {
+              <p class="registros-edit-field-error">El medio de pago es obligatorio.</p>
+            }
+          </div>
         </div>
-        <div class="user-row">
-          <span class="label">cliente:</span>
-          <span class="value">{{ data.cliente }}</span>
-        </div>
-        <div class="user-row">
-          <span class="label">Nit:</span>
-          <span class="value">{{ data.nit }}</span>
-        </div>
-        <div class="user-row">
-          <span class="label">F. Generación:</span>
-          <span class="value">{{ data.fechaGeneracion }}</span>
-        </div>
-        <div class="user-row">
-          <span class="label">F. Vencimiento:</span>
-          <span class="value">{{ data.fechaVencimiento }}</span>
-        </div>
-        <div class="user-row">
-          <span class="label">V. Total:</span>
-          <span class="value">{{ data.valorTotal }}</span>
-        </div>
-        <div class="user-row">
-          <span class="label">F. Pago:</span>
-          <span class="value">{{ data.formaPago }}</span>
-        </div>
-        <div class="user-row">
-          <span class="label">M. Pago:</span>
-          <span class="value">{{ data.medioPago }}</span>
-        </div>
-        <div class="user-actions">
-          <button class="btn-edt" >
-            <span class="material-symbols-outlined">edit</span>
-          </button>
-          <button class="btn-del">
-            <span class="material-symbols-outlined">delete_forever</span>
-          </button>
+
+        <div class="registros-edit-actions">
+          <button class="registros-save-btn" (click)="guardarEdicion()">Guardar cambios</button>
+          <button class="registros-cancel-btn" (click)="cancelarEdicion()">Cancelar</button>
         </div>
       </div>
-    }
-  </div>
+    </div>
+  } @else {
 
-  <div class="btn-work">
-    <button class="btn-work-add" >
-      NUEVO REGISTRO
-    </button>
-  </div>
+    <div class="tabla-wrapper">
+      <table class="table-custom hidden md:table">
+        <thead >
+          <tr >
+            <th>Id</th>
+            <th>N.Factura</th>
+            <th>Cliente</th>
+            <th>Nit</th>
+            <th>V. Total</th>
+            <th>M. Pago</th>
+            <th>Botones</th>
+          </tr>
+        </thead>
+        <tbody >
+          @for (data of dataObj; track data) {
+            <tr class="table-row">
+              <td>
+                <div>{{data.id}}</div>
+              </td>
+              <td>
+                <div>{{data.numeroFactura}}</div>
+              </td>
+              <td>
+                <div>{{data.cliente}}</div>
+              </td>
+              <td>
+                <div>{{data.nit}}</div>
+              </td>
+              <td>
+                <div>{{data.valorTotal}}</div>
+              </td>
+              <td>
+                <div>{{data.medioPago}}</div>
+              </td>
+              <td>
+                <div class="btn-table">
+                  <button class="btn-edt" (click)="iniciarEdicion(data)">
+                    <span class="material-symbols-outlined"> edit </span>
+                  </button>
+                  <button class="btn-del" (click)="eliminar(data)">
+                    <span class="material-symbols-outlined"> delete_forever </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="block md:hidden mobile-container">
+      @for (data of dataObj; track data) {
+        <div class="user-card">
+          <div class="user-row">
+            <span class="label">Id:</span>
+            <span class="value">{{ data.id }}</span>
+          </div>
+          <div class="user-row">
+            <span class="label">factura:</span>
+            <span class="value">{{ data.numeroFactura }}</span>
+          </div>
+          <div class="user-row">
+            <span class="label">cliente:</span>
+            <span class="value">{{ data.cliente }}</span>
+          </div>
+          <div class="user-row">
+            <span class="label">Nit:</span>
+            <span class="value">{{ data.nit }}</span>
+          </div>
+          <div class="user-row">
+            <span class="label">F. Generación:</span>
+            <span class="value">{{ data.fechaGeneracion }}</span>
+          </div>
+          <div class="user-row">
+            <span class="label">F. Vencimiento:</span>
+            <span class="value">{{ data.fechaVencimiento }}</span>
+          </div>
+          <div class="user-row">
+            <span class="label">V. Total:</span>
+            <span class="value">{{ data.valorTotal }}</span>
+          </div>
+          <div class="user-row">
+            <span class="label">F. Pago:</span>
+            <span class="value">{{ data.formaPago }}</span>
+          </div>
+          <div class="user-row">
+            <span class="label">M. Pago:</span>
+            <span class="value">{{ data.medioPago }}</span>
+          </div>
+          <div class="user-actions">
+            <button class="btn-edt" (click)="iniciarEdicion(data)">
+              <span class="material-symbols-outlined">edit</span>
+            </button>
+            <button class="btn-del" (click)="eliminar(data)">
+              <span class="material-symbols-outlined">delete_forever</span>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+
+    @if (totalPaginas > 1) {
+      <div class="registros-paginacion">
+        <button
+          class="registros-paginacion-btn"
+          [disabled]="paginaActual === 0"
+          (click)="paginaAnterior()">
+          Anterior
+        </button>
+        <span class="registros-paginacion-info">
+          Página {{ paginaActual + 1 }} de {{ totalPaginas }}
+        </span>
+        <button
+          class="registros-paginacion-btn"
+          [disabled]="paginaActual >= totalPaginas - 1"
+          (click)="paginaSiguiente()">
+          Siguiente
+        </button>
+      </div>
+    }
+
+    <div class="btn-work">
+      <button class="btn-work-add" (click)="nuevoRegistro()">
+        NUEVO REGISTRO
+      </button>
+    </div>
+  }
 </div>
