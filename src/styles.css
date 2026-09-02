@@ -1199,7 +1199,7 @@ select.registros-edit-input {
   ============================== */
 
   .mobile-container {
-    @apply md:hidden space-y-4;
+    @apply lg:hidden space-y-4;
   }
 
   .user-card {
