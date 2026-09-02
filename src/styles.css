@@ -7,6 +7,28 @@ TAILWIND BASE
 
 
 /* ===============================
+VARIABLES CSS (mismos colores que tailwind.config.js)
+================================ */
+:root {
+  --color-blue-dark: #001a4a;
+  --color-blue-dark-medium: #034579;
+  --color-blue-main: #008abb;
+  --color-blue-light: #95cadc;
+  --color-blue-light-very: #d4e7ed;
+
+  --color-primary: #0F172A;
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: #334155;
+  --color-accent: #0369A1;
+  --color-background: #F8FAFC;
+  --color-foreground: #020617;
+  --color-muted: #E8ECF1;
+  --color-border: #E2E8F0;
+  --color-destructive: #DC2626;
+}
+
+
+/* ===============================
 GLOBAL STYLES
 ================================ */
 
@@ -60,7 +82,7 @@ html, body {
     border-radius: 10px;
     box-sizing: initial;
 
-    background: #008abb;
+    background: var(--color-blue-main);
     overflow-x: hidden;
     overflow-y: hidden;
 }
@@ -125,7 +147,7 @@ html, body {
     width: 100%;
     height: 100%;
     border-bottom-right-radius: 20px; 
-    background: #008abb;
+    background: var(--color-blue-main);
 }
 
 /*MOSTRAR LA CURBA SUPERIRO*/
@@ -155,7 +177,7 @@ html, body {
     width: 100%;
     height: 100%;
     border-top-right-radius: 20px;
-    background: #008abb;
+    background: var(--color-blue-main);
 }
 
 .sideBar ul li a{
@@ -222,7 +244,7 @@ html, body {
     width: 100%;
     height: 100%;
     border-bottom-right-radius: 20px;
-    background: #008abb;
+    background: var(--color-blue-main);
 }
 
 .sideBar-logout b:nth-child(2){
@@ -242,7 +264,7 @@ html, body {
     width: 100%;
     height: 100%;
     border-top-right-radius: 20px;
-    background: #008abb;
+    background: var(--color-blue-main);
 }
 
 .sideBar-logout:hover b:nth-child(1),
@@ -271,7 +293,7 @@ html, body {
 .toggle{
     width: 50px;
     height: 50px;
-    background: #008abb;
+    background: var(--color-blue-main);
     border-radius: 10px;
     cursor: pointer;
     display: flex;
@@ -344,6 +366,124 @@ background: #ff4d89;
 
 .landing-hero-cta {
   @apply inline-block mt-10 px-8 py-3 border border-white text-white text-sm font-medium tracking-wide uppercase hover:bg-white hover:text-foreground transition-colors duration-200 cursor-pointer;
+}
+
+.landing-logo {
+  @apply text-xl font-bold;
+}
+
+/* Quiénes somos */
+.landing-about {
+  @apply px-6 md:px-10 py-16 bg-white;
+}
+
+.landing-about-content {
+  @apply max-w-3xl mx-auto text-center;
+}
+
+.landing-about-title {
+  @apply text-2xl md:text-3xl font-semibold text-foreground mb-4;
+}
+
+.landing-about-text {
+  @apply text-secondary;
+}
+
+/* Por qué elegirnos */
+.landing-features {
+  @apply px-6 md:px-10 py-16 md:py-20 bg-background;
+}
+
+.landing-features-container {
+  @apply max-w-6xl mx-auto;
+}
+
+.landing-features-title {
+  @apply text-2xl md:text-3xl font-semibold text-foreground mb-10 text-center;
+}
+
+.landing-features-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6;
+}
+
+.landing-feature-card {
+  @apply bg-white rounded-xl border border-border p-6 shadow-sm hover:shadow-md transition-shadow duration-200;
+}
+
+.landing-feature-icon {
+  @apply w-11 h-11 rounded-lg bg-accent/10 text-accent flex items-center justify-center mb-4;
+}
+
+/* Sectores que atendemos */
+.landing-sectors {
+  @apply px-6 md:px-10 py-16 md:py-20 bg-white;
+}
+
+.landing-sectors-container {
+  @apply max-w-6xl mx-auto;
+}
+
+.landing-sectors-title {
+  @apply text-2xl md:text-3xl font-semibold text-foreground mb-10 text-center;
+}
+
+.landing-sectors-grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6;
+}
+
+.landing-sector-card {
+  @apply bg-background rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow duration-200 p-6;
+}
+
+.landing-sector-icon {
+  @apply w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4;
+}
+
+/* Compartidas entre tarjetas de feature/sector */
+.landing-card-icon-svg {
+  @apply w-6 h-6;
+}
+
+.landing-card-title {
+  @apply font-semibold text-foreground;
+}
+
+.landing-card-text {
+  @apply mt-2 text-sm text-secondary;
+}
+
+/* CTA */
+.landing-cta-section {
+  @apply px-6 md:px-10 py-16 bg-background;
+}
+
+.landing-cta-box {
+  @apply max-w-4xl mx-auto rounded-2xl bg-primary text-primary-foreground px-8 py-12 text-center shadow-xl;
+}
+
+.landing-cta-title {
+  @apply text-2xl md:text-3xl font-semibold;
+}
+
+.landing-cta-text {
+  @apply mt-4 text-primary-foreground/80 max-w-xl mx-auto;
+}
+
+.landing-cta-button {
+  @apply inline-block mt-8 px-6 py-3 rounded-lg bg-white text-primary font-medium hover:bg-muted transition-colors duration-200 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+}
+
+/* Footer */
+.landing-footer {
+  @apply px-6 md:px-10 py-10 bg-foreground text-white/70 text-sm;
+}
+
+.landing-footer-content {
+  @apply max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4;
+}
+
+.landing-footer-brand {
+  @apply text-white font-semibold;
 }
 
 .landing-nav-dashboard {
