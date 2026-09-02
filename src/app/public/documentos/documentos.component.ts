@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Documento } from '../../documentos/documento.interface';
 import { DocumentosService } from '../../documentos/documentos.service';
 
 @Component({
   selector: 'app-documentos',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './documentos.component.html',
   styleUrl: './documentos.component.css'
 })
