@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Data } from '../interface/data.interfaces';
 import { DashBoardService } from '../dash-board/dash-board.service';
+import Swal from 'sweetalert2';
 
 const REGISTRO_VACIO: Data = {
   id: 0,
@@ -181,8 +182,18 @@ tamanoPagina = 10;
     });
   }
 
-  eliminar(data: Data): void {
-    if (!confirm(`¿Eliminar el registro de la factura ${data.numeroFactura}?`)) {
+  async eliminar(data: Data): Promise<void> {
+    const resultado = await Swal.fire({
+      title: '¿Eliminar registro?',
+      text: `La factura ${data.numeroFactura} se eliminará permanentemente.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#dc2626'
+    });
+
+    if (!resultado.isConfirmed) {
       return;
     }
 
@@ -192,6 +203,7 @@ tamanoPagina = 10;
       },
       error: (err) => {
         console.error(err);
+        Swal.fire({ icon: 'error', title: 'No se pudo eliminar', text: 'Intenta de nuevo.' });
         this.cdr.detectChanges();
       }
     });

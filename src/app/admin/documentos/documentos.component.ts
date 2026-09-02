@@ -4,6 +4,7 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@an
 import { Documento } from '../../documentos/documento.interface';
 import { DocumentosService } from '../../documentos/documentos.service';
 import { HttpEventType } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-documentos',
@@ -93,15 +94,27 @@ export class DocumentosComponent implements OnInit {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   }
 
-  eliminar(documento: Documento): void {
-    const confirmado = confirm(`¿Eliminar "${documento.nombreOriginal}"? Esta acción no se puede deshacer.`);
-    if (!confirmado) return;
+  async eliminar(documento: Documento): Promise<void> {
+    const resultado = await Swal.fire({
+      title: '¿Eliminar documento?',
+      text: `"${documento.nombreOriginal}" — esta acción no se puede deshacer.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#dc2626'
+    });
+
+    if (!resultado.isConfirmed) {
+      return;
+    }
 
     this.documentosService.eliminar(documento).subscribe({
       next: () => {
         this.cargarLista();
       },
       error: () => {
+        Swal.fire({ icon: 'error', title: 'No se pudo eliminar', text: 'Intenta de nuevo.' });
         this.cdr.detectChanges();
       }
     });
