@@ -11,14 +11,43 @@
       <a [routerLink]="['/documentos']" class="landing-nav-link">Documentos</a>
       <a href="#contacto" class="landing-nav-link">Contacto</a>
     </div>
-    <!-- Auth Links boton login -->
-     @if (estaAutenticado()) {
-      <div class="landing-nav-auth">
-        <a [routerLink]="['/admin/home']" class="landing-nav-dashboard">Dashboard</a>
-        <a (click)="cerrarSesion()" class="landing-nav-cta">Cerrar sesión</a>
+    <!-- Auth Links boton login (solo escritorio, en mobile viven dentro del menú hamburguesa) -->
+    <div class="landing-nav-auth-desktop">
+      @if (estaAutenticado()) {
+        <div class="landing-nav-auth">
+          <a [routerLink]="['/admin/home']" class="landing-nav-dashboard">Dashboard</a>
+          <a (click)="cerrarSesion()" class="landing-nav-cta">Cerrar sesión</a>
+        </div>
+      } @else {
+        <a [routerLink]="['/admin/login']" class="landing-nav-cta">Ingresar</a>
+      }
+    </div>
+
+    <button
+      type="button"
+      class="landing-nav-toggle"
+      (click)="toggleMenuMovil()"
+      [attr.aria-expanded]="menuMovilAbierto"
+      aria-label="Abrir menú">
+      <span class="material-symbols-outlined">{{ menuMovilAbierto ? 'close' : 'menu' }}</span>
+    </button>
+
+    @if (menuMovilAbierto) {
+      <div class="landing-nav-mobile">
+        <a href="#quienes-somos" class="landing-nav-mobile-link" (click)="cerrarMenuMovil()">Quiénes somos</a>
+        <a href="#productos" class="landing-nav-mobile-link" (click)="cerrarMenuMovil()">Productos</a>
+        <a [routerLink]="['/documentos']" class="landing-nav-mobile-link" (click)="cerrarMenuMovil()">Documentos</a>
+        <a href="#contacto" class="landing-nav-mobile-link" (click)="cerrarMenuMovil()">Contacto</a>
+
+        <hr class="landing-nav-mobile-divider" />
+
+        @if (estaAutenticado()) {
+          <a [routerLink]="['/admin/home']" class="landing-nav-mobile-link" (click)="cerrarMenuMovil()">Dashboard</a>
+          <a class="landing-nav-mobile-link" (click)="cerrarSesion(); cerrarMenuMovil()">Cerrar sesión</a>
+        } @else {
+          <a [routerLink]="['/admin/login']" class="landing-nav-mobile-link" (click)="cerrarMenuMovil()">Ingresar</a>
+        }
       </div>
-    } @else {
-      <a [routerLink]="['/admin/login']" class="landing-nav-cta">Ingresar</a>
     }
 
   </nav>

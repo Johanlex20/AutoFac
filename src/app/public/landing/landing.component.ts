@@ -18,12 +18,22 @@ export class LandingComponent implements AfterViewInit, OnDestroy {
     private authService: AuthService
   ) {}
 
+  menuMovilAbierto = false;
+
   estaAutenticado(): boolean {
     return this.authService.isAuthenticated();
   }
 
   cerrarSesion(): void {
     this.authService.logout();
+  }
+
+  toggleMenuMovil(): void {
+    this.menuMovilAbierto = !this.menuMovilAbierto;
+  }
+
+  cerrarMenuMovil(): void {
+    this.menuMovilAbierto = false;
   }
 
   ngAfterViewInit(): void {

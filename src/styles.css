@@ -310,7 +310,7 @@ background: #ff4d89;
 }
 
 .landing-nav-links {
-  @apply hidden md:flex items-center gap-8 text-sm font-medium;
+  @apply hidden lg:flex items-center gap-8 text-sm font-medium;
 }
 
 .landing-nav-link {
@@ -352,6 +352,26 @@ background: #ff4d89;
 
 .landing-nav-auth {
   @apply flex items-center gap-4;
+}
+
+.landing-nav-auth-desktop {
+  @apply hidden lg:block;
+}
+
+.landing-nav-toggle {
+  @apply lg:hidden flex items-center justify-center w-9 h-9 text-white cursor-pointer;
+}
+
+.landing-nav-mobile {
+  @apply lg:hidden absolute top-full inset-x-0 bg-foreground/95 backdrop-blur-sm flex flex-col px-6 py-4 gap-4 text-sm font-medium;
+}
+
+.landing-nav-mobile-link {
+  @apply text-white/90 hover:text-white transition-colors duration-200 cursor-pointer;
+}
+
+.landing-nav-mobile-divider {
+  @apply border-white/20 my-1;
 }
 
 
