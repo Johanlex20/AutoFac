@@ -18,13 +18,13 @@ export class DocumentosComponent implements OnInit {
   cargando = true;
   subiendo = false;
   progreso = 0;
-  archivoSeleccionado: File | null = null;
+
+  modoCreacion = false;
   documentoEnEdicion: Documento | null = null;
   nombreEditado = '';
-  archivoEditado: File | null = null;
-  @ViewChild('fileInput') fileInputRef?: ElementRef<HTMLInputElement>;
-  @ViewChild('fileInputEdit') fileInputEditRef?: ElementRef<HTMLInputElement>;
+  archivoSeleccionado: File | null = null;
 
+  @ViewChild('fileInput') fileInputRef?: ElementRef<HTMLInputElement>;
 
   constructor(
     private documentosService: DocumentosService,
@@ -32,7 +32,7 @@ export class DocumentosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-        this.cargarLista();
+    this.cargarLista();
   }
 
   cargarLista(): void {
@@ -50,12 +50,44 @@ export class DocumentosComponent implements OnInit {
     });
   }
 
+  nuevoDocumento(): void {
+    this.modoCreacion = true;
+    this.documentoEnEdicion = null;
+    this.nombreEditado = '';
+    this.archivoSeleccionado = null;
+  }
+
+  iniciarEdicion(documento: Documento): void {
+    this.modoCreacion = false;
+    this.documentoEnEdicion = documento;
+    this.nombreEditado = documento.nombreOriginal;
+    this.archivoSeleccionado = null;
+  }
+
+  cancelarEdicion(): void {
+    this.modoCreacion = false;
+    this.documentoEnEdicion = null;
+    this.nombreEditado = '';
+    this.archivoSeleccionado = null;
+    if (this.fileInputRef) {
+      this.fileInputRef.nativeElement.value = '';
+    }
+  }
+
   onArchivoSeleccionado(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.archivoSeleccionado = input.files?.[0] ?? null;
   }
 
-  subir(): void {
+  guardarFormulario(): void {
+    if (this.modoCreacion) {
+      this.subir();
+    } else {
+      this.guardarEdicion();
+    }
+  }
+
+  private subir(): void {
     if (!this.archivoSeleccionado) return;
 
     this.subiendo = true;
@@ -67,18 +99,39 @@ export class DocumentosComponent implements OnInit {
           this.progreso = Math.round((event.loaded / event.total) * 100);
         } else if (event.type === HttpEventType.Response) {
           this.subiendo = false;
-          this.archivoSeleccionado = null;
-
-          if (this.fileInputRef) {
-            this.fileInputRef.nativeElement.value = '';
-          }
-
+          this.cancelarEdicion();
           this.cargarLista();
         }
         this.cdr.detectChanges();
       },
       error: () => {
         this.subiendo = false;
+        Swal.fire({ icon: 'error', title: 'No se pudo subir', text: 'Intenta de nuevo.' });
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  private guardarEdicion(): void {
+    if (!this.documentoEnEdicion) return;
+
+    this.subiendo = true;
+    this.progreso = 0;
+
+    this.documentosService.actualizar(this.documentoEnEdicion, this.nombreEditado, this.archivoSeleccionado ?? undefined).subscribe({
+      next: (event) => {
+        if (event.type === HttpEventType.UploadProgress && event.total) {
+          this.progreso = Math.round((event.loaded / event.total) * 100);
+        } else if (event.type === HttpEventType.Response) {
+          this.subiendo = false;
+          this.cancelarEdicion();
+          this.cargarLista();
+        }
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.subiendo = false;
+        Swal.fire({ icon: 'error', title: 'No se pudo guardar', text: 'Intenta de nuevo.' });
         this.cdr.detectChanges();
       }
     });
@@ -87,7 +140,7 @@ export class DocumentosComponent implements OnInit {
   descargarUrl(documento: Documento): string {
     return this.documentosService.descargarUrl(documento);
   }
-  
+
   formatoTamano(bytes: number): string {
     if (bytes < 1024) return `${bytes} B`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
@@ -119,51 +172,4 @@ export class DocumentosComponent implements OnInit {
       }
     });
   }
-
-  iniciarEdicion(documento: Documento): void {
-    this.documentoEnEdicion = documento;
-    this.nombreEditado = documento.nombreOriginal;
-    this.archivoEditado = null;
-  }
-
-  cancelarEdicion(): void {
-    this.documentoEnEdicion = null;
-    this.nombreEditado = '';
-    this.archivoEditado = null;
-    if (this.fileInputRef) {
-      this.fileInputRef.nativeElement.value = '';
-    }
-
-  }
-
-  onArchivoEditado(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.archivoEditado = input.files?.[0] ?? null;
-  }
-
-  guardarEdicion(): void {
-    if (!this.documentoEnEdicion) return;
-
-    this.subiendo = true;
-    this.progreso = 0;
-
-    this.documentosService.actualizar(this.documentoEnEdicion, this.nombreEditado, this.archivoEditado ?? undefined).subscribe({
-      next: (event) => {
-        if (event.type === HttpEventType.UploadProgress && event.total) {
-          this.progreso = Math.round((event.loaded / event.total) * 100);
-        } else if (event.type === HttpEventType.Response) {
-          this.subiendo = false;
-          this.cancelarEdicion();
-          this.cargarLista();
-        }
-        this.cdr.detectChanges();
-      },
-      error: () => {
-        this.subiendo = false;
-        this.cdr.detectChanges();
-      }
-    });
-  }
-
-
 }

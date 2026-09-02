@@ -4,90 +4,106 @@
     <p class="admin-documentos-subtitle">{{ documentos.length }} archivo(s) disponible(s)</p>
   </div>
 
-  @if (!documentoEnEdicion) {
-    <div class="admin-documentos-upload">
-      <input type="file" #fileInput (change)="onArchivoSeleccionado($event)" class="admin-documentos-file-input" />
-      <button (click)="subir()" [disabled]="!archivoSeleccionado || subiendo" class="admin-documentos-upload-btn">
-        {{ subiendo ? 'Subiendo...' : 'Subir documento' }}
-      </button>
-    </div>
-  }
+  @if (modoCreacion || documentoEnEdicion) {
+    <div class="admin-documentos-edit-page">
+      <div class="admin-documentos-edit-card">
+        <div class="admin-documentos-edit-header">
+          <h2 class="admin-documentos-edit-heading">{{ modoCreacion ? 'Nuevo documento' : 'Editar documento' }}</h2>
+          @if (!modoCreacion) {
+            <p class="admin-documentos-edit-subheading">{{ documentoEnEdicion?.nombreOriginal }}</p>
+          }
+        </div>
 
-  @if (documentoEnEdicion) {
-    <div class="admin-documentos-edit">
-      <p class="admin-documentos-edit-title">Editando: {{ documentoEnEdicion.nombreOriginal }}</p>
-      <input type="text" [(ngModel)]="nombreEditado" placeholder="Nombre del documento" class="admin-documentos-edit-input" />
-      <input type="file" #fileInputEdit (change)="onArchivoEditado($event)" class="admin-documentos-file-input" />
-      <div class="admin-documentos-edit-actions">
-        <button (click)="guardarEdicion()" [disabled]="subiendo" class="admin-documentos-upload-btn">
-          {{ subiendo ? 'Guardando...' : 'Guardar cambios' }}
-        </button>
-        <button (click)="cancelarEdicion()" class="admin-documentos-cancel-btn">Cancelar</button>
+        @if (!modoCreacion) {
+          <div class="admin-documentos-edit-field">
+            <label class="admin-documentos-edit-label">Nombre del documento</label>
+            <input type="text" [(ngModel)]="nombreEditado" placeholder="Nombre del documento" class="admin-documentos-edit-input" />
+          </div>
+        }
+
+        <div class="admin-documentos-edit-field">
+          <label class="admin-documentos-edit-label">{{ modoCreacion ? 'Archivo' : 'Reemplazar archivo (opcional)' }}</label>
+          <input type="file" #fileInput (change)="onArchivoSeleccionado($event)" class="admin-documentos-file-input" />
+        </div>
+
+        @if (subiendo) {
+          <div class="admin-documentos-progress">
+            <div class="admin-documentos-progress-bar" [style.width.%]="progreso"></div>
+          </div>
+        }
+
+        <div class="admin-documentos-edit-actions">
+          <button (click)="guardarFormulario()" [disabled]="subiendo || (modoCreacion && !archivoSeleccionado)" class="admin-documentos-upload-btn">
+            {{ subiendo ? (modoCreacion ? 'Subiendo...' : 'Guardando...') : (modoCreacion ? 'Subir documento' : 'Guardar cambios') }}
+          </button>
+          <button (click)="cancelarEdicion()" class="admin-documentos-cancel-btn">Cancelar</button>
+        </div>
       </div>
     </div>
-  }
+  } @else {
 
-  @if (subiendo) {
-    <div class="admin-documentos-progress">
-      <div class="admin-documentos-progress-bar" [style.width.%]="progreso"></div>
+    <div class="admin-documentos-upload">
+      <button (click)="nuevoDocumento()" class="admin-documentos-upload-btn">
+        Subir documento
+      </button>
     </div>
-  }
 
-  @if (cargando) {
-    <div class="admin-documentos-empty">Cargando documentos...</div>
-  }
-  @if (!cargando && documentos.length === 0) {
-    <div class="admin-documentos-empty">
-      Todavía no hay documentos subidos.
-    </div>
-  }
+    @if (cargando) {
+      <div class="admin-documentos-empty">Cargando documentos...</div>
+    }
+    @if (!cargando && documentos.length === 0) {
+      <div class="admin-documentos-empty">
+        Todavía no hay documentos subidos.
+      </div>
+    }
 
-  @if (!cargando && documentos.length > 0) {
-    <table class="admin-documentos-table hidden lg:table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Tamaño</th>
-          <th>Fecha</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (doc of documentos; track doc.id) {
+    @if (!cargando && documentos.length > 0) {
+      <table class="admin-documentos-table hidden lg:table">
+        <thead>
           <tr>
-            <td>{{ doc.nombreOriginal }}</td>
-            <td>{{ formatoTamano(doc.tamanoBytes) }}</td>
-            <td>{{ doc.fechaSubida | date: 'dd/MM/yyyy, h:mm a' }}</td>
-            <td><a [href]="descargarUrl(doc)" class="admin-documentos-download">Descargar</a></td>
-            <td class="admin-documentos-actions-cell">
+            <th>Nombre</th>
+            <th>Tamaño</th>
+            <th>Fecha</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (doc of documentos; track doc.id) {
+            <tr>
+              <td>{{ doc.nombreOriginal }}</td>
+              <td>{{ formatoTamano(doc.tamanoBytes) }}</td>
+              <td>{{ doc.fechaSubida | date: 'dd/MM/yyyy, h:mm a' }}</td>
+              <td><a [href]="descargarUrl(doc)" class="admin-documentos-download">Descargar</a></td>
+              <td class="admin-documentos-actions-cell">
+                <button (click)="iniciarEdicion(doc)" class="admin-documentos-action-btn">Editar</button>
+                <button (click)="eliminar(doc)" class="admin-documentos-action-btn admin-documentos-action-delete">Eliminar</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <div class="admin-documentos-mobile-list">
+        @for (doc of documentos; track doc.id) {
+          <div class="admin-documentos-mobile-card">
+            <p class="admin-documentos-mobile-name" [title]="doc.nombreOriginal">{{ doc.nombreOriginal }}</p>
+            <div class="admin-documentos-mobile-row">
+              <span class="admin-documentos-mobile-label">Tamaño:</span>
+              <span>{{ formatoTamano(doc.tamanoBytes) }}</span>
+            </div>
+            <div class="admin-documentos-mobile-row">
+              <span class="admin-documentos-mobile-label">Fecha:</span>
+              <span>{{ doc.fechaSubida | date: 'dd/MM/yyyy, h:mm a' }}</span>
+            </div>
+            <div class="admin-documentos-mobile-actions">
+              <a [href]="descargarUrl(doc)" class="admin-documentos-download">Descargar</a>
               <button (click)="iniciarEdicion(doc)" class="admin-documentos-action-btn">Editar</button>
               <button (click)="eliminar(doc)" class="admin-documentos-action-btn admin-documentos-action-delete">Eliminar</button>
-            </td>
-          </tr>
+            </div>
+          </div>
         }
-      </tbody>
-    </table>
-
-    <div class="admin-documentos-mobile-list">
-      @for (doc of documentos; track doc.id) {
-        <div class="admin-documentos-mobile-card">
-          <p class="admin-documentos-mobile-name" [title]="doc.nombreOriginal">{{ doc.nombreOriginal }}</p>
-          <div class="admin-documentos-mobile-row">
-            <span class="admin-documentos-mobile-label">Tamaño:</span>
-            <span>{{ formatoTamano(doc.tamanoBytes) }}</span>
-          </div>
-          <div class="admin-documentos-mobile-row">
-            <span class="admin-documentos-mobile-label">Fecha:</span>
-            <span>{{ doc.fechaSubida | date: 'dd/MM/yyyy, h:mm a' }}</span>
-          </div>
-          <div class="admin-documentos-mobile-actions">
-            <a [href]="descargarUrl(doc)" class="admin-documentos-download">Descargar</a>
-            <button (click)="iniciarEdicion(doc)" class="admin-documentos-action-btn">Editar</button>
-            <button (click)="eliminar(doc)" class="admin-documentos-action-btn admin-documentos-action-delete">Eliminar</button>
-          </div>
-        </div>
-      }
-    </div>
+      </div>
+    }
   }
 </div>
