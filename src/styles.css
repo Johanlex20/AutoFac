@@ -914,6 +914,30 @@ background: #ff4d89;
   @apply border-red-300 text-red-600 hover:bg-red-50;
 }
 
+.admin-documentos-mobile-list {
+  @apply lg:hidden space-y-3;
+}
+
+.admin-documentos-mobile-card {
+  @apply bg-white p-4 rounded-xl shadow border border-gray-100;
+}
+
+.admin-documentos-mobile-name {
+  @apply font-semibold text-blue-dark truncate mb-2;
+}
+
+.admin-documentos-mobile-row {
+  @apply flex justify-between py-1 text-sm border-b last:border-b-0;
+}
+
+.admin-documentos-mobile-label {
+  @apply font-medium text-gray-500;
+}
+
+.admin-documentos-mobile-actions {
+  @apply flex flex-wrap gap-2 mt-3;
+}
+
 
 /* ===============================
     DOCUMENTOS (público)

@@ -43,7 +43,7 @@
   }
 
   @if (!cargando && documentos.length > 0) {
-    <table class="admin-documentos-table">
+    <table class="admin-documentos-table hidden lg:table">
       <thead>
         <tr>
           <th>Nombre</th>
@@ -68,5 +68,26 @@
         }
       </tbody>
     </table>
+
+    <div class="admin-documentos-mobile-list">
+      @for (doc of documentos; track doc.id) {
+        <div class="admin-documentos-mobile-card">
+          <p class="admin-documentos-mobile-name" [title]="doc.nombreOriginal">{{ doc.nombreOriginal }}</p>
+          <div class="admin-documentos-mobile-row">
+            <span class="admin-documentos-mobile-label">Tamaño:</span>
+            <span>{{ formatoTamano(doc.tamanoBytes) }}</span>
+          </div>
+          <div class="admin-documentos-mobile-row">
+            <span class="admin-documentos-mobile-label">Fecha:</span>
+            <span>{{ doc.fechaSubida | date: 'dd/MM/yyyy, h:mm a' }}</span>
+          </div>
+          <div class="admin-documentos-mobile-actions">
+            <a [href]="descargarUrl(doc)" class="admin-documentos-download">Descargar</a>
+            <button (click)="iniciarEdicion(doc)" class="admin-documentos-action-btn">Editar</button>
+            <button (click)="eliminar(doc)" class="admin-documentos-action-btn admin-documentos-action-delete">Eliminar</button>
+          </div>
+        </div>
+      }
+    </div>
   }
 </div>
