@@ -1,24 +1,61 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AuthService } from '../../auth/auth.service';
+import { ProductosPublicoService } from '../productos/productos-publico.service';
+import { Producto } from '../../interface/producto.interface';
+import Swal from 'sweetalert2';
 
 gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-landing',
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css',
 })
-export class LandingComponent implements AfterViewInit, OnDestroy {
+export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private host: ElementRef<HTMLElement>,
-    private authService: AuthService
+    private authService: AuthService,
+    private productosService: ProductosPublicoService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   menuMovilAbierto = false;
+  productos: Producto[] = [];
+
+  formatoPrecio(valor: number): string {
+    return new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      maximumFractionDigits: 0,
+    }).format(valor);
+  }
+
+  agregarAlCarrito(producto: Producto): void {
+    Swal.fire({
+      icon: 'success',
+      title: 'Producto agregado',
+      text: `${producto.nombre} — muy pronto podrás completar tu pedido desde aquí.`,
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  }
+
+  ngOnInit(): void {
+    this.productosService.listar().subscribe({
+      next: (productos) => {
+        this.productos = productos;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.cdr.detectChanges();
+      },
+    });
+  }
 
   estaAutenticado(): boolean {
     return this.authService.isAuthenticated();

@@ -1,17 +1,25 @@
-
-
 <!-- Hero -->
 <section class="landing-hero">
   <!-- Nav -->
   <nav class="landing-nav">
-    <span class="landing-logo">AutoFacSigo</span>
+    <a href="#" class="landing-logo">
+      <svg viewBox="0 0 32 32" class="landing-logo-mark" aria-hidden="true">
+        <path d="M13 4h6" />
+        <path d="M14 4v7.2L8.4 22.6A2 2 0 0 0 10.2 25.6h11.6a2 2 0 0 0 1.8-3L18 11.2V4" />
+        <path d="M9.5 18.5h13" />
+      </svg>
+      <span>AutoFacSigo</span>
+    </a>
+
     <div class="landing-nav-links">
       <a href="#quienes-somos" class="landing-nav-link">Quiénes somos</a>
-      <a href="#productos" class="landing-nav-link">Productos</a>
+      <a href="#catalogo" class="landing-nav-link">Productos</a>
+      <a href="#sectores" class="landing-nav-link">Sectores</a>
       <a [routerLink]="['/documentos']" class="landing-nav-link">Documentos</a>
       <a href="#contacto" class="landing-nav-link">Contacto</a>
     </div>
-    <!-- Auth Links boton login (solo escritorio, en mobile viven dentro del menú hamburguesa) -->
+
+    <!-- Auth Links (solo escritorio, en mobile viven dentro del menú hamburguesa) -->
     <div class="landing-nav-auth-desktop">
       @if (estaAutenticado()) {
         <div class="landing-nav-auth">
@@ -35,7 +43,8 @@
     @if (menuMovilAbierto) {
       <div class="landing-nav-mobile">
         <a href="#quienes-somos" class="landing-nav-mobile-link" (click)="cerrarMenuMovil()">Quiénes somos</a>
-        <a href="#productos" class="landing-nav-mobile-link" (click)="cerrarMenuMovil()">Productos</a>
+        <a href="#catalogo" class="landing-nav-mobile-link" (click)="cerrarMenuMovil()">Productos</a>
+        <a href="#sectores" class="landing-nav-mobile-link" (click)="cerrarMenuMovil()">Sectores</a>
         <a [routerLink]="['/documentos']" class="landing-nav-mobile-link" (click)="cerrarMenuMovil()">Documentos</a>
         <a href="#contacto" class="landing-nav-mobile-link" (click)="cerrarMenuMovil()">Contacto</a>
 
@@ -49,14 +58,14 @@
         }
       </div>
     }
-
   </nav>
 
   <div class="landing-hero-overlay"></div>
   <div class="landing-hero-content">
     <h1 class="hero-animate landing-hero-title">Químicos para la industria de alimentos</h1>
     <p class="hero-animate landing-hero-subtitle">
-      Distribuimos productos químicos para plantas de alimentos, fábricas de producción, servicios de catering y restaurantes.
+      Distribuimos insumos de limpieza y desinfección para plantas de alimentos, fábricas de producción,
+      servicios de catering y restaurantes — con la trazabilidad y el cumplimiento que exige el sector.
     </p>
     <a href="#contacto" class="hero-animate landing-hero-cta">Solicitar cotización</a>
   </div>
@@ -65,77 +74,86 @@
 
 <!-- Quiénes somos -->
 <section id="quienes-somos" class="landing-about">
-  <div class="landing-about-content">
-    <h2 class="landing-about-title">Quiénes somos</h2>
+  <div class="landing-about-grid">
+    <h2 class="landing-about-heading">Quiénes somos</h2>
     <p class="landing-about-text">
-      Somos una empresa dedicada a la distribución de insumos químicos para el sector alimenticio, garantizando calidad y cumplimiento normativo para nuestros clientes.
+      Somos una empresa dedicada a la distribución de insumos químicos para el sector alimenticio,
+      garantizando calidad y cumplimiento normativo para nuestros clientes en cada entrega.
     </p>
+  </div>
+</section>
+
+<!-- Catálogo de productos -->
+<section id="catalogo" class="landing-catalogo">
+  <div class="landing-catalogo-container">
+    <h2 class="landing-section-title">Nuestros productos</h2>
+
+    @if (productos.length === 0) {
+      <p class="landing-catalogo-empty">Muy pronto vas a poder ver aquí el catálogo completo.</p>
+    } @else {
+      <div class="landing-catalogo-grid">
+        @for (producto of productos; track producto.id) {
+          <div class="landing-producto-card">
+            <div class="landing-producto-img-wrap">
+              <img [src]="producto.imagenUrl" [alt]="producto.nombre" class="landing-producto-img" />
+            </div>
+            <div class="landing-producto-body">
+              <span class="landing-producto-categoria">{{ producto.categoria }}</span>
+              <h3 class="landing-producto-nombre">{{ producto.nombre }}</h3>
+              <p class="landing-producto-descripcion">{{ producto.descripcion }}</p>
+              <div class="landing-producto-footer">
+                <div>
+                  <span class="landing-producto-precio">{{ formatoPrecio(producto.precio) }}</span>
+                  <span class="landing-producto-presentacion">/ {{ producto.presentacion }}</span>
+                </div>
+                <button type="button" class="landing-producto-boton" (click)="agregarAlCarrito(producto)">
+                  Agregar al carrito
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
   </div>
 </section>
 
 <!-- Por qué elegirnos -->
 <section class="landing-features">
   <div class="landing-features-container">
-    <h2 class="landing-features-title">Por qué elegirnos</h2>
+    <h2 class="landing-section-title">Por qué elegirnos</h2>
     <div class="stagger-group landing-features-grid">
       <div class="stagger-item landing-feature-card">
-        <div class="landing-feature-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="landing-card-icon-svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
-          </svg>
-        </div>
-        <h3 class="landing-card-title">Calidad garantizada</h3>
-        <p class="landing-card-text">Insumos que cumplen los estándares de calidad exigidos por el sector alimenticio.</p>
+        <img src="assets/img/feature-calidad.jpg" alt="" class="landing-feature-img" />
+        <span class="landing-feature-label">Calidad garantizada</span>
       </div>
 
       <div class="stagger-item landing-feature-card">
-        <div class="landing-feature-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="landing-card-icon-svg">
-            <circle cx="12" cy="12" r="9" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
-          </svg>
-        </div>
-        <h3 class="landing-card-title">Cumplimiento normativo</h3>
-        <p class="landing-card-text">Cumplimos la normativa vigente para insumos químicos del sector alimenticio.</p>
+        <img src="assets/img/feature-cumplimiento.jpg" alt="" class="landing-feature-img" />
+        <span class="landing-feature-label">Cumplimiento normativo</span>
       </div>
 
       <div class="stagger-item landing-feature-card">
-        <div class="landing-feature-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="landing-card-icon-svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h11v8H3z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M14 10h4l3 3v2h-7z" />
-            <circle cx="7" cy="17" r="1.5" />
-            <circle cx="17" cy="17" r="1.5" />
-          </svg>
-        </div>
-        <h3 class="landing-card-title">Distribución especializada</h3>
-        <p class="landing-card-text">Cobertura para plantas de alimentos, fábricas, catering y restaurantes.</p>
+        <img src="assets/img/feature-distribucion.jpg" alt="" class="landing-feature-img" />
+        <span class="landing-feature-label">Distribución especializada</span>
       </div>
 
       <div class="stagger-item landing-feature-card">
-        <div class="landing-feature-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="landing-card-icon-svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 3h6" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10 3v6l-5.5 9.5A1 1 0 005.36 20h13.28a1 1 0 00.86-1.5L14 9V3" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15h9" />
-          </svg>
-        </div>
-        <h3 class="landing-card-title">Soporte especializado</h3>
-        <p class="landing-card-text">Asesoría técnica para elegir el insumo correcto según tu operación.</p>
+        <img src="assets/img/feature-soporte.jpg" alt="" class="landing-feature-img" />
+        <span class="landing-feature-label">Soporte especializado</span>
       </div>
     </div>
   </div>
 </section>
 
 <!-- Sectores que atendemos -->
-<section id="productos" class="landing-sectors">
+<section id="sectores" class="landing-sectors">
   <div class="landing-sectors-container">
-    <h2 class="landing-sectors-title">Sectores que atendemos</h2>
+    <h2 class="landing-section-title landing-section-title-light">Sectores que atendemos</h2>
     <div class="stagger-group landing-sectors-grid">
       <div class="stagger-item landing-sector-card">
         <div class="landing-sector-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="landing-card-icon-svg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="landing-card-icon-svg">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 3h6" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M10 3v6l-5.5 9.5A1 1 0 005.36 20h13.28a1 1 0 00.86-1.5L14 9V3" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15h9" />
@@ -147,7 +165,7 @@
 
       <div class="stagger-item landing-sector-card">
         <div class="landing-sector-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="landing-card-icon-svg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="landing-card-icon-svg">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h11v8H3z" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M14 10h4l3 3v2h-7z" />
             <circle cx="7" cy="17" r="1.5" />
@@ -160,7 +178,7 @@
 
       <div class="stagger-item landing-sector-card">
         <div class="landing-sector-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="landing-card-icon-svg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="landing-card-icon-svg">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4" />
           </svg>
@@ -174,19 +192,26 @@
 
 <!-- CTA -->
 <section class="landing-cta-section">
-  <div class="landing-cta-box">
-    <h2 class="landing-cta-title">¿Buscas un proveedor confiable de químicos industriales?</h2>
-    <p class="landing-cta-text">Escríbenos y te ayudamos a encontrar la solución adecuada para tu operación.</p>
-    <a href="#contacto" class="landing-cta-button">
-      Solicitar cotización
-    </a>
+  <div class="landing-cta-content">
+    <div>
+      <h2 class="landing-cta-title">¿Buscas un proveedor confiable de químicos industriales?</h2>
+      <p class="landing-cta-text">Escríbenos y te ayudamos a encontrar la solución adecuada para tu operación.</p>
+    </div>
+    <a href="#contacto" class="landing-cta-button">Solicitar cotización</a>
   </div>
 </section>
 
 <!-- Footer -->
 <footer id="contacto" class="landing-footer">
   <div class="landing-footer-content">
-    <span class="landing-footer-brand">AutoFacSigo</span>
-    <p>Contacto: correo@ejemplo.com | Tel: 000 000 0000</p>
+    <a href="#" class="landing-logo landing-footer-brand">
+      <svg viewBox="0 0 32 32" class="landing-logo-mark" aria-hidden="true">
+        <path d="M13 4h6" />
+        <path d="M14 4v7.2L8.4 22.6A2 2 0 0 0 10.2 25.6h11.6a2 2 0 0 0 1.8-3L18 11.2V4" />
+        <path d="M9.5 18.5h13" />
+      </svg>
+      <span>AutoFacSigo</span>
+    </a>
+    <p class="landing-footer-contact">correo&#64;ejemplo.com &nbsp;|&nbsp; Tel: 000 000 0000</p>
   </div>
 </footer>

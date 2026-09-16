@@ -1,21 +1,57 @@
 <div class="admin-home">
   <div class="admin-home-header">
     <h1 class="admin-home-title">Dashboard</h1>
-    <p class="admin-home-subtitle">Resumen general — próximamente gráficas y estadísticas.</p>
+    <p class="admin-home-subtitle">Resumen y verificación de los datos capturados en Registros.</p>
   </div>
 
   <div class="admin-home-grid">
     <div class="admin-home-card">
       <span class="admin-home-card-label">Facturas capturadas</span>
-      <span class="admin-home-card-value">—</span>
+      <span class="admin-home-card-value">{{ cargando ? '—' : totalFacturas }}</span>
     </div>
     <div class="admin-home-card">
-      <span class="admin-home-card-label">Documentos</span>
-      <span class="admin-home-card-value">—</span>
+      <span class="admin-home-card-label">Valor total facturado</span>
+      <span class="admin-home-card-value">{{ cargando ? '—' : formatoMoneda(valorTotalFacturado) }}</span>
     </div>
     <div class="admin-home-card">
-      <span class="admin-home-card-label">Usuarios</span>
-      <span class="admin-home-card-value">—</span>
+      <span class="admin-home-card-label">Promedio por factura</span>
+      <span class="admin-home-card-value">{{ cargando ? '—' : formatoMoneda(promedioPorFactura) }}</span>
     </div>
   </div>
+
+  @if (!cargando) {
+    <div class="admin-home-charts">
+      <app-bar-chart
+        titulo="Facturas capturadas por mes"
+        [datos]="facturasPorMes"
+        orientacion="vertical"
+        [formatoValor]="formatoConteo"
+        vacioMensaje="Todavía no hay facturas con fecha para agrupar por mes.">
+      </app-bar-chart>
+
+      <app-bar-chart
+        titulo="Valor facturado por mes"
+        [datos]="valorPorMes"
+        orientacion="vertical"
+        [formatoValor]="formatoMoneda"
+        vacioMensaje="Todavía no hay facturas con fecha para agrupar por mes.">
+      </app-bar-chart>
+
+      <app-bar-chart
+        titulo="Facturas por forma de pago"
+        [datos]="porFormaPago"
+        orientacion="horizontal"
+        [formatoValor]="formatoConteo"
+        vacioMensaje="Todavía no hay registros capturados.">
+      </app-bar-chart>
+
+      <app-bar-chart
+        titulo="Top clientes por valor facturado"
+        [datos]="topClientes"
+        orientacion="horizontal"
+        [formatoValor]="formatoMoneda"
+        vacioMensaje="Todavía no hay registros capturados.">
+      </app-bar-chart>
+    </div>
+  }
 </div>

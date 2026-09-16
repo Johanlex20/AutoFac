@@ -1,0 +1,31 @@
+<div class="chart-card">
+  <h3 class="chart-title">{{ titulo }}</h3>
+
+  @if (datos.length === 0) {
+    <p class="chart-empty">{{ vacioMensaje }}</p>
+  } @else if (orientacion === 'horizontal') {
+    <div class="chart-rows">
+      @for (item of datos; track item.etiqueta) {
+        <div class="chart-row" tabindex="0">
+          <span class="chart-row-label" [title]="item.etiqueta">{{ item.etiqueta }}</span>
+          <div class="chart-row-track">
+            <div class="chart-row-bar" [style.width.%]="porcentaje(item.valor)"></div>
+          </div>
+          <span class="chart-row-value">{{ formatoValor(item.valor) }}</span>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="chart-columns">
+      @for (item of datos; track item.etiqueta) {
+        <div class="chart-column-wrap" tabindex="0">
+          <span class="chart-column-value">{{ formatoValor(item.valor) }}</span>
+          <div class="chart-column-track">
+            <div class="chart-column-bar" [style.height.%]="porcentaje(item.valor)"></div>
+          </div>
+          <span class="chart-column-label">{{ item.etiqueta }}</span>
+        </div>
+      }
+    </div>
+  }
+</div>

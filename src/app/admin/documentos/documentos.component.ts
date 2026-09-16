@@ -5,10 +5,11 @@ import { Documento } from '../../documentos/documento.interface';
 import { DocumentosService } from '../../documentos/documentos.service';
 import { HttpEventType } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { DocumentoPreviewComponent } from '../../documentos/documento-preview/documento-preview.component';
 
 @Component({
   selector: 'app-documentos',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, DocumentoPreviewComponent],
   templateUrl: './documentos.component.html',
   styleUrl: './documentos.component.css',
 })
@@ -18,6 +19,7 @@ export class DocumentosComponent implements OnInit {
   cargando = true;
   subiendo = false;
   progreso = 0;
+  documentoSeleccionado: Documento | null = null;
 
   modoCreacion = false;
   documentoEnEdicion: Documento | null = null;
@@ -139,6 +141,14 @@ export class DocumentosComponent implements OnInit {
 
   descargarUrl(documento: Documento): string {
     return this.documentosService.descargarUrl(documento);
+  }
+
+  abrirPreview(documento: Documento): void {
+    this.documentoSeleccionado = documento;
+  }
+
+  cerrarPreview(): void {
+    this.documentoSeleccionado = null;
   }
 
   formatoTamano(bytes: number): string {

@@ -76,6 +76,7 @@
               <td>{{ doc.fechaSubida | date: 'dd/MM/yyyy, h:mm a' }}</td>
               <td><a [href]="descargarUrl(doc)" class="admin-documentos-download">Descargar</a></td>
               <td class="admin-documentos-actions-cell">
+                <button (click)="abrirPreview(doc)" class="admin-documentos-action-btn">Ver</button>
                 <button (click)="iniciarEdicion(doc)" class="admin-documentos-action-btn">Editar</button>
                 <button (click)="eliminar(doc)" class="admin-documentos-action-btn admin-documentos-action-delete">Eliminar</button>
               </td>
@@ -98,6 +99,7 @@
             </div>
             <div class="admin-documentos-mobile-actions">
               <a [href]="descargarUrl(doc)" class="admin-documentos-download">Descargar</a>
+              <button (click)="abrirPreview(doc)" class="admin-documentos-action-btn">Ver</button>
               <button (click)="iniciarEdicion(doc)" class="admin-documentos-action-btn">Editar</button>
               <button (click)="eliminar(doc)" class="admin-documentos-action-btn admin-documentos-action-delete">Eliminar</button>
             </div>
@@ -107,3 +109,5 @@
     }
   }
 </div>
+
+<app-documento-preview [documento]="documentoSeleccionado" (cerrar)="cerrarPreview()"></app-documento-preview>

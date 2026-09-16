@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Data } from '../interface/data.interfaces';
 import { DashBoardService } from '../dash-board/dash-board.service';
+import { aFechaISO } from '../shared/fecha.util';
 import Swal from 'sweetalert2';
 
 const REGISTRO_VACIO: Data = {
@@ -84,33 +85,12 @@ tamanoPagina = 10;
     this.registroEnEdicion = data;
     this.formularioEdicion = {
       ...data,
-      fechaGeneracion: this.aFechaISO(data.fechaGeneracion),
-      fechaVencimiento: this.aFechaISO(data.fechaVencimiento)
+      fechaGeneracion: aFechaISO(data.fechaGeneracion),
+      fechaVencimiento: aFechaISO(data.fechaVencimiento)
     };
     this.mensajeError = '';
     this.camposFaltantes = {};
     this.valorTotalInvalido = false;
-  }
-
-  private aFechaISO(fecha: string): string {
-    if (!fecha) {
-      return '';
-    }
-
-    // Ya viene en formato ISO (AAAA-MM-DD), como quedan los registros creados/editados desde el formulario
-    if (/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
-      return fecha;
-    }
-
-    // Formato tal como lo captura Siigo: DD-MM-AA
-    const coincide = fecha.match(/^(\d{2})-(\d{2})-(\d{2})$/);
-    if (!coincide) {
-      return '';
-    }
-
-    const [, dia, mes, anioCorto] = coincide;
-    const anio = Number(anioCorto) <= 49 ? `20${anioCorto}` : `19${anioCorto}`;
-    return `${anio}-${mes}-${dia}`;
   }
 
   cancelarEdicion(): void {

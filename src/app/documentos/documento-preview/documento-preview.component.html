@@ -1,0 +1,24 @@
+@if (documento) {
+  <div class="documento-preview-overlay" (click)="cerrarModal()">
+    <div class="documento-preview-modal" (click)="$event.stopPropagation()">
+      <div class="documento-preview-header">
+        <p class="documento-preview-title" [title]="documento.nombreOriginal">{{ documento.nombreOriginal }}</p>
+        <button class="documento-preview-close" (click)="cerrarModal()" aria-label="Cerrar">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="documento-preview-body">
+        @if (cargando) {
+          <p class="documento-preview-message">Cargando...</p>
+        } @else if (noPrevisualizable) {
+          <p class="documento-preview-message">Este tipo de archivo no se puede previsualizar. Descárgalo para verlo.</p>
+        } @else if (esImagen && urlImagen) {
+          <img [src]="urlImagen" class="documento-preview-image" [alt]="documento.nombreOriginal" />
+        } @else if (esPdf && urlIframe) {
+          <iframe [src]="urlIframe" class="documento-preview-iframe"></iframe>
+        }
+      </div>
+    </div>
+  </div>
+}

@@ -21,7 +21,7 @@
 
     <div class="documentos-grid">
       @for (doc of documentos; track doc.id) {
-        <div class="documentos-card">
+        <div class="documentos-card" (click)="abrirPreview(doc)">
           <div class="documentos-card-header">
             <span class="documentos-badge" [ngClass]="colorBadge(doc.nombreOriginal)">
               {{ extension(doc.nombreOriginal) }}
@@ -34,7 +34,7 @@
           </p>
           <p class="documentos-card-date">{{ doc.fechaSubida | date: 'dd/MM/yyyy, h:mm a' }}</p>
 
-          <a [href]="descargarUrl(doc)" class="documentos-card-download">
+          <a [href]="descargarUrl(doc)" class="documentos-card-download" (click)="$event.stopPropagation()">
             Descargar
           </a>
         </div>
@@ -42,3 +42,5 @@
     </div>
   </div>
 </div>
+
+<app-documento-preview [documento]="documentoSeleccionado" (cerrar)="cerrarPreview()"></app-documento-preview>

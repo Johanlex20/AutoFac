@@ -3,10 +3,11 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Documento } from '../../documentos/documento.interface';
 import { DocumentosService } from '../../documentos/documentos.service';
+import { DocumentoPreviewComponent } from '../../documentos/documento-preview/documento-preview.component';
 
 @Component({
   selector: 'app-documentos',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, DocumentoPreviewComponent],
   templateUrl: './documentos.component.html',
   styleUrl: './documentos.component.css'
 })
@@ -14,6 +15,7 @@ export class DocumentosComponent implements OnInit {
 
   documentos: Documento[] = [];
   cargando = true;
+  documentoSeleccionado: Documento | null = null;
 
   constructor(
     private documentosService: DocumentosService,
@@ -64,5 +66,13 @@ export class DocumentosComponent implements OnInit {
 
   descargarUrl(documento: Documento): string {
     return this.documentosService.descargarUrl(documento);
+  }
+
+  abrirPreview(documento: Documento): void {
+    this.documentoSeleccionado = documento;
+  }
+
+  cerrarPreview(): void {
+    this.documentoSeleccionado = null;
   }
 }
