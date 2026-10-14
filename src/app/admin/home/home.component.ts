@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Data } from '../../interface/data.interfaces';
 import { DashBoardService } from '../../dash-board/dash-board.service';
 import { aFechaISO } from '../../shared/fecha.util';
+import { parseValorMonetario } from '../../shared/valor.util';
 import { BarChartComponent, BarChartItem } from '../../shared/bar-chart/bar-chart.component';
 
 const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
@@ -69,12 +70,7 @@ export class HomeComponent implements OnInit {
   }
 
   private parseValor(valor: string): number {
-    if (!valor) {
-      return 0;
-    }
-    const soloNumeros = valor.replace(/[^\d.,-]/g, '').replace(/,/g, '');
-    const numero = parseFloat(soloNumeros);
-    return isNaN(numero) ? 0 : numero;
+    return parseValorMonetario(valor);
   }
 
   private agruparPorMes(registros: Data[], modo: 'contar' | 'sumar'): BarChartItem[] {

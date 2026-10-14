@@ -28,6 +28,20 @@
               <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                   <b></b>
                   <b></b>
+                  <a [routerLink]="['/admin/usuarios/list']">
+                      @if (urlFoto((perfil$ | async)?.fotoUrl); as foto) {
+                          <span class="icon sidebar-avatar-wrap">
+                              <img [src]="foto" alt="Mi foto de perfil" class="sidebar-avatar" />
+                          </span>
+                      } @else {
+                          <span class="material-symbols-outlined icon">face </span>
+                      }
+                      <span class="title">Profile</span>
+                  </a>
+              </li>
+              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <b></b>
+                  <b></b>
                   <a [routerLink]="['/admin/captura']">
                       <span class="material-symbols-outlined icon">receipt_long</span>
                       <span class="title">Captura</span>
@@ -44,14 +58,6 @@
               <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                   <b></b>
                   <b></b>
-                  <a [routerLink]="['/admin/usuarios/list']">
-                      <span class="material-symbols-outlined icon">face </span>
-                      <span class="title">Profile</span>
-                  </a>
-              </li>
-              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                  <b></b>
-                  <b></b>
                   <a [routerLink]="['/admin/messages/list']" >
                       <span class="material-symbols-outlined icon"> notifications_unread </span> 
                       <span class="title">Messages</span>
@@ -63,6 +69,14 @@
                   <a [routerLink]="['/admin/documentos/list']">
                       <span class="material-symbols-outlined icon"> folder </span>
                       <span class="title">Documentos</span>
+                  </a>
+              </li>
+              <li class="list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <b></b>
+                  <b></b>
+                  <a [routerLink]="['/admin/productos/list']">
+                      <span class="material-symbols-outlined icon"> inventory_2 </span>
+                      <span class="title">Productos</span>
                   </a>
               </li>
         </ul>

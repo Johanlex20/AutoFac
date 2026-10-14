@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AuthService } from '../../auth/auth.service';
 import { ProductosPublicoService } from '../productos/productos-publico.service';
 import { Producto } from '../../interface/producto.interface';
+import { urlImagenProducto } from '../../shared/imagen-producto.util';
 import Swal from 'sweetalert2';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -26,6 +27,8 @@ export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   menuMovilAbierto = false;
   productos: Producto[] = [];
+
+  urlImagen = urlImagenProducto;
 
   formatoPrecio(valor: number): string {
     return new Intl.NumberFormat('es-CO', {

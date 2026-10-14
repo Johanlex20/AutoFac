@@ -1,1 +1,176 @@
-<p>Estoy en messages</p>
+<div class="admin-documentos msg-page">
+
+  <!-- Encabezado -->
+  <div class="msg-header">
+    <div>
+      <h1 class="admin-documentos-title">Centro de notificaciones</h1>
+      <p class="admin-documentos-subtitle">Alertas de Siigo, productos, documentos y tu cuenta, en un solo lugar.</p>
+    </div>
+    <div class="msg-header-acciones">
+      <button type="button" (click)="cargar()" [disabled]="cargando" class="admin-documentos-action-btn msg-btn-icono">
+        <span class="material-symbols-outlined">refresh</span> Actualizar
+      </button>
+      <button type="button" (click)="marcarTodasLeidas()" [disabled]="cargando || sinLeer === 0" class="admin-documentos-upload-btn msg-btn-icono">
+        <span class="material-symbols-outlined">done_all</span> Marcar todas como leídas
+      </button>
+    </div>
+  </div>
+
+  @if (cargando) {
+    <div class="msg-cargando">
+      <span class="material-symbols-outlined msg-cargando-icono">progress_activity</span>
+      Revisando facturas, productos y documentos...
+    </div>
+  } @else {
+
+    <!-- Resumen (cada tarjeta filtra la lista) -->
+    <div class="msg-resumen">
+      <button type="button" class="msg-stat msg-stat-sinleer" [class.msg-stat-activa]="filtroSeveridad === 'sinLeer'" (click)="alternarFiltroSeveridad('sinLeer')">
+        <span class="material-symbols-outlined msg-stat-icono">mark_email_unread</span>
+        <span class="msg-stat-valor">{{ sinLeer }}</span>
+        <span class="msg-stat-etiqueta">Sin leer</span>
+      </button>
+      <button type="button" class="msg-stat msg-critica" [class.msg-stat-activa]="filtroSeveridad === 'critica'" (click)="alternarFiltroSeveridad('critica')">
+        <span class="material-symbols-outlined msg-stat-icono">error</span>
+        <span class="msg-stat-valor">{{ contar('critica') }}</span>
+        <span class="msg-stat-etiqueta">Críticas</span>
+      </button>
+      <button type="button" class="msg-stat msg-advertencia" [class.msg-stat-activa]="filtroSeveridad === 'advertencia'" (click)="alternarFiltroSeveridad('advertencia')">
+        <span class="material-symbols-outlined msg-stat-icono">warning</span>
+        <span class="msg-stat-valor">{{ contar('advertencia') }}</span>
+        <span class="msg-stat-etiqueta">Advertencias</span>
+      </button>
+      <button type="button" class="msg-stat msg-info" [class.msg-stat-activa]="filtroSeveridad === 'info'" (click)="alternarFiltroSeveridad('info')">
+        <span class="material-symbols-outlined msg-stat-icono">info</span>
+        <span class="msg-stat-valor">{{ contar('info') }}</span>
+        <span class="msg-stat-etiqueta">Informativas</span>
+      </button>
+      <button type="button" class="msg-stat msg-exito" [class.msg-stat-activa]="filtroSeveridad === 'exito'" (click)="alternarFiltroSeveridad('exito')">
+        <span class="material-symbols-outlined msg-stat-icono">check_circle</span>
+        <span class="msg-stat-valor">{{ contar('exito') }}</span>
+        <span class="msg-stat-etiqueta">Todo en orden</span>
+      </button>
+    </div>
+
+    <div class="msg-layout">
+
+      <!-- Lista de notificaciones -->
+      <section class="msg-principal">
+
+        <div class="msg-chips">
+          @for (c of categorias; track c.clave) {
+            <button type="button" class="msg-chip" [class.msg-chip-activo]="filtroCategoria === c.clave" (click)="filtroCategoria = c.clave">
+              <span class="material-symbols-outlined">{{ c.icono }}</span>
+              {{ c.texto }}
+              <span class="msg-chip-contador">{{ contarCategoria(c.clave) }}</span>
+            </button>
+          }
+        </div>
+
+        @if (filtradas.length === 0) {
+          <div class="msg-vacio">
+            <span class="material-symbols-outlined msg-vacio-icono">notifications_off</span>
+            <p>No hay notificaciones con estos filtros.</p>
+            <button type="button" class="admin-documentos-action-btn" (click)="limpiarFiltros()">Quitar filtros</button>
+          </div>
+        }
+
+        <div class="msg-lista">
+          @for (n of filtradas; track n.id) {
+            <article [ngClass]="['msg-item', 'msg-' + n.severidad, estaLeida(n) ? 'msg-leida' : '']" (click)="alternarLeida(n)">
+              <div class="msg-icono">
+                <span class="material-symbols-outlined">{{ n.icono }}</span>
+              </div>
+
+              <div class="msg-cuerpo">
+                <div class="msg-titulo-fila">
+                  <h3 class="msg-titulo">{{ n.titulo }}</h3>
+                  @if (!estaLeida(n)) {
+                    <span class="msg-punto" title="Sin leer"></span>
+                  }
+                </div>
+                <p class="msg-detalle">{{ n.detalle }}</p>
+                <div class="msg-pie">
+                  <span class="msg-etiqueta msg-etiqueta-{{ n.categoria }}">{{ n.categoria }}</span>
+                  @if (n.fecha) {
+                    <span class="msg-tiempo">{{ hace(n.fecha) }}</span>
+                  }
+                </div>
+              </div>
+
+              @if (n.accion) {
+                @if (n.accion.ruta) {
+                  <a [routerLink]="n.accion.ruta" (click)="$event.stopPropagation()" class="msg-accion">{{ n.accion.texto }}</a>
+                } @else {
+                  <button type="button" (click)="$event.stopPropagation(); cargar()" class="msg-accion">{{ n.accion.texto }}</button>
+                }
+              }
+            </article>
+          }
+        </div>
+      </section>
+
+      <!-- Paneles laterales -->
+      <aside class="msg-lateral">
+
+        <section class="msg-panel">
+          <h2 class="msg-panel-titulo"><span class="material-symbols-outlined">receipt_long</span> Resumen de Siigo</h2>
+          <div class="msg-dato">
+            <span class="msg-dato-etiqueta">Facturas capturadas</span>
+            <span class="msg-dato-valor">{{ totalFacturas }}</span>
+          </div>
+          <div class="msg-dato">
+            <span class="msg-dato-etiqueta">Facturado en {{ nombreMesActual }}</span>
+            <span class="msg-dato-valor">{{ formatoMoneda(facturadoMesActual) }}</span>
+          </div>
+          <div class="msg-dato">
+            <span class="msg-dato-etiqueta">Última captura</span>
+            <span class="msg-dato-valor">{{ ultimaCaptura || '—' }}</span>
+          </div>
+          <p class="msg-variacion" [class.msg-variacion-sube]="(variacionMes ?? 0) >= 0 && variacionMes !== null" [class.msg-variacion-baja]="(variacionMes ?? 0) < 0">
+            @if (variacionMes !== null) {
+              <span class="material-symbols-outlined">{{ variacionMes >= 0 ? 'trending_up' : 'trending_down' }}</span>
+            }
+            {{ variacionTexto }}
+          </p>
+        </section>
+
+        <section class="msg-panel">
+          <h2 class="msg-panel-titulo"><span class="material-symbols-outlined">monitor_heart</span> Estado del sistema</h2>
+          @for (e of estados; track e.nombre) {
+            <div class="msg-estado">
+              <span class="msg-estado-punto msg-estado-{{ e.estado }}"></span>
+              <span class="material-symbols-outlined msg-estado-icono">{{ e.icono }}</span>
+              <div class="msg-estado-texto">
+                <span class="msg-estado-nombre">{{ e.nombre }}</span>
+                <span class="msg-estado-detalle">{{ e.detalle }}</span>
+              </div>
+            </div>
+          }
+        </section>
+
+        <section class="msg-panel">
+          <h2 class="msg-panel-titulo"><span class="material-symbols-outlined">history</span> Actividad reciente</h2>
+          @if (actividad.length === 0) {
+            <p class="msg-estado-detalle">Todavía no hay actividad para mostrar.</p>
+          }
+          <ol class="msg-linea">
+            @for (ev of actividad; track $index) {
+              <li class="msg-linea-item">
+                <span class="msg-linea-icono msg-etiqueta-{{ ev.categoria }}">
+                  <span class="material-symbols-outlined">{{ ev.icono }}</span>
+                </span>
+                <div class="msg-linea-texto">
+                  <span class="msg-estado-nombre">{{ ev.texto }}</span>
+                  <span class="msg-estado-detalle">{{ ev.detalle }}</span>
+                  <span class="msg-tiempo">{{ hace(ev.fecha) }}</span>
+                </div>
+              </li>
+            }
+          </ol>
+        </section>
+
+      </aside>
+    </div>
+  }
+</div>

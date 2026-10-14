@@ -31,6 +31,12 @@ export class AuthService {
     );
   }
 
+  /** Reemplaza el token y el correo guardados (cuando el usuario cambia su correo, el token anterior deja de servir). */
+  guardarSesion(token: string, email: string): void {
+    localStorage.setItem(this.tokenKey, token);
+    localStorage.setItem(this.emailKey, email);
+  }
+
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.emailKey);

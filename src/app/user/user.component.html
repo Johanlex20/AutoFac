@@ -1,1 +1,124 @@
-<p>estoy en vista usuarios</p>
+<div class="admin-documentos">
+  <div class="admin-documentos-header">
+    <h1 class="admin-documentos-title">Mi perfil</h1>
+    <p class="admin-documentos-subtitle">Personaliza tu foto y tus datos de cuenta.</p>
+  </div>
+
+  @if (cargando) {
+    <div class="admin-documentos-empty">Cargando perfil...</div>
+  }
+
+  @if (errorCarga) {
+    <div class="admin-documentos-empty">No se pudo cargar tu perfil. Recarga la página e intenta de nuevo.</div>
+  }
+
+  @if (perfil) {
+    <div class="perfil-grid">
+
+      <!-- Foto -->
+      <section class="perfil-card perfil-card-foto">
+        <div class="perfil-avatar" [class.perfil-avatar-cargando]="subiendoFoto">
+          @if (fotoUrl) {
+            <img [src]="fotoUrl" [alt]="'Foto de ' + (perfil.nombre || perfil.email)" class="perfil-avatar-img" />
+          } @else {
+            <span class="perfil-avatar-iniciales">{{ iniciales }}</span>
+          }
+        </div>
+
+        <p class="perfil-nombre">{{ perfil.nombre || 'Sin nombre' }}</p>
+        <p class="perfil-email">{{ perfil.email }}</p>
+        <span class="perfil-rol">{{ perfil.rol }}</span>
+
+        <input
+          type="file"
+          #fotoInput
+          hidden
+          accept="image/jpeg,image/png,image/webp,image/gif"
+          (change)="onFotoSeleccionada($event)" />
+
+        <div class="perfil-foto-acciones">
+          <button type="button" (click)="fotoInput.click()" [disabled]="subiendoFoto" class="admin-documentos-upload-btn">
+            {{ subiendoFoto ? 'Subiendo...' : (fotoUrl ? 'Cambiar foto' : 'Subir foto') }}
+          </button>
+          @if (fotoUrl) {
+            <button type="button" (click)="quitarFoto()" [disabled]="subiendoFoto" class="admin-documentos-action-btn admin-documentos-action-delete">
+              Quitar foto
+            </button>
+          }
+        </div>
+        <p class="admin-productos-hint">JPG, PNG, WEBP o GIF · máximo 5 MB</p>
+      </section>
+
+      <div class="perfil-columna">
+
+        <!-- Datos -->
+        <section class="perfil-card">
+          <h2 class="admin-documentos-edit-heading">Datos personales</h2>
+          <p class="admin-documentos-edit-subheading perfil-card-sub">Esta información es solo tuya.</p>
+
+          <div class="perfil-campos">
+            <div class="admin-documentos-edit-field">
+              <label class="admin-documentos-edit-label" for="perfil-nombre">Nombre</label>
+              <input id="perfil-nombre" type="text" maxlength="100" [(ngModel)]="form.nombre" placeholder="Tu nombre completo" class="admin-documentos-edit-input" />
+            </div>
+
+            <div class="admin-documentos-edit-field">
+              <label class="admin-documentos-edit-label" for="perfil-telefono">Teléfono</label>
+              <input id="perfil-telefono" type="tel" maxlength="20" [(ngModel)]="form.telefono" placeholder="Ej: 320 829 7869" class="admin-documentos-edit-input" />
+            </div>
+
+            <div class="admin-documentos-edit-field perfil-campo-ancho">
+              <label class="admin-documentos-edit-label" for="perfil-email">Correo</label>
+              <input id="perfil-email" type="email" maxlength="150" [(ngModel)]="form.email" class="admin-documentos-edit-input" />
+              <p class="admin-productos-hint">Es el correo con el que inicias sesión.</p>
+            </div>
+          </div>
+
+          @if (datosCambiaron && errorDatos) {
+            <p class="perfil-error">{{ errorDatos }}</p>
+          }
+
+          <div class="perfil-acciones">
+            <button type="button" (click)="guardarDatos()" [disabled]="guardando || !datosCambiaron || !!errorDatos" class="admin-documentos-upload-btn">
+              {{ guardando ? 'Guardando...' : 'Guardar cambios' }}
+            </button>
+          </div>
+        </section>
+
+        <!-- Contraseña -->
+        <section class="perfil-card">
+          <h2 class="admin-documentos-edit-heading">Cambiar contraseña</h2>
+          <p class="admin-documentos-edit-subheading perfil-card-sub">Mínimo 8 caracteres.</p>
+
+          <div class="perfil-campos">
+            <div class="admin-documentos-edit-field perfil-campo-ancho">
+              <label class="admin-documentos-edit-label" for="perfil-pass-actual">Contraseña actual</label>
+              <input id="perfil-pass-actual" type="password" autocomplete="current-password" [(ngModel)]="passwordForm.actual" class="admin-documentos-edit-input" />
+            </div>
+
+            <div class="admin-documentos-edit-field">
+              <label class="admin-documentos-edit-label" for="perfil-pass-nueva">Nueva contraseña</label>
+              <input id="perfil-pass-nueva" type="password" autocomplete="new-password" [(ngModel)]="passwordForm.nueva" class="admin-documentos-edit-input" />
+            </div>
+
+            <div class="admin-documentos-edit-field">
+              <label class="admin-documentos-edit-label" for="perfil-pass-confirmar">Confirmar contraseña</label>
+              <input id="perfil-pass-confirmar" type="password" autocomplete="new-password" [(ngModel)]="passwordForm.confirmar" class="admin-documentos-edit-input" />
+            </div>
+          </div>
+
+          @if (passwordForm.nueva && errorPassword) {
+            <p class="perfil-error">{{ errorPassword }}</p>
+          }
+
+          <div class="perfil-acciones">
+            <button type="button" (click)="cambiarPassword()" [disabled]="guardandoPassword || !!errorPassword" class="admin-documentos-upload-btn">
+              {{ guardandoPassword ? 'Actualizando...' : 'Actualizar contraseña' }}
+            </button>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  }
+</div>

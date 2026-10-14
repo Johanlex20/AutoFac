@@ -1,0 +1,171 @@
+<div class="admin-documentos admin-productos">
+  <div class="admin-documentos-header">
+    <h1 class="admin-documentos-title">Productos</h1>
+    <p class="admin-documentos-subtitle">{{ productos.length }} producto(s) en el catálogo</p>
+  </div>
+
+  @if (formularioAbierto) {
+    <div class="admin-documentos-edit-page">
+      <div class="admin-documentos-edit-card">
+        <div class="admin-documentos-edit-header">
+          <h2 class="admin-documentos-edit-heading">{{ modoCreacion ? 'Nuevo producto' : 'Editar producto' }}</h2>
+          @if (!modoCreacion) {
+            <p class="admin-documentos-edit-subheading">{{ productoEnEdicion?.nombre }}</p>
+          }
+        </div>
+
+        <div class="admin-documentos-edit-field">
+          <label class="admin-documentos-edit-label" for="nombre">Nombre</label>
+          <input id="nombre" type="text" [(ngModel)]="form.nombre" placeholder="Ej: DETERBLUE" class="admin-documentos-edit-input" />
+        </div>
+
+        <div class="admin-documentos-edit-field">
+          <label class="admin-documentos-edit-label" for="categoria">Categoría</label>
+          <input id="categoria" type="text" [(ngModel)]="form.categoria" placeholder="Ej: Desinfectantes" class="admin-documentos-edit-input" />
+        </div>
+
+        <div class="admin-documentos-edit-field">
+          <label class="admin-documentos-edit-label" for="descripcion">Descripción</label>
+          <textarea id="descripcion" rows="3" [(ngModel)]="form.descripcion" placeholder="Para qué sirve el producto" class="admin-documentos-edit-input"></textarea>
+        </div>
+
+        <div class="admin-productos-row">
+          <div class="admin-documentos-edit-field">
+            <label class="admin-documentos-edit-label" for="presentacion">Presentación</label>
+            <input id="presentacion" type="text" [(ngModel)]="form.presentacion" placeholder="Ej: 20 L" class="admin-documentos-edit-input" />
+          </div>
+
+          <div class="admin-documentos-edit-field">
+            <label class="admin-documentos-edit-label" for="precio">Precio (COP)</label>
+            <input id="precio" type="number" min="0" step="1000" [(ngModel)]="form.precio" class="admin-documentos-edit-input" />
+          </div>
+        </div>
+
+        <div class="admin-documentos-edit-field">
+          <label class="admin-documentos-edit-label" for="imagen">Imagen del producto</label>
+          <input
+            id="imagen"
+            type="file"
+            #imagenInput
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            (change)="onImagenSeleccionada($event)"
+            class="admin-documentos-file-input" />
+          <p class="admin-productos-hint">JPG, PNG, WEBP o GIF · máximo 5 MB</p>
+        </div>
+
+        @if (vistaPrevia) {
+          <div class="admin-productos-preview">
+            <img [src]="vistaPrevia" [alt]="form.nombre || 'Vista previa'" class="admin-productos-preview-img" />
+          </div>
+          @if (imagenSeleccionada) {
+            <button type="button" (click)="quitarImagenSeleccionada()" class="admin-documentos-action-btn admin-productos-quitar">
+              Quitar imagen nueva
+            </button>
+          }
+        }
+
+        <div class="admin-documentos-edit-actions">
+          <button (click)="guardarFormulario()" [disabled]="guardando || !formularioValido" class="admin-documentos-upload-btn">
+            {{ guardando ? 'Guardando...' : (modoCreacion ? 'Crear producto' : 'Guardar cambios') }}
+          </button>
+          <button (click)="cancelarEdicion()" class="admin-documentos-cancel-btn">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  } @else {
+
+    <div class="admin-documentos-upload">
+      <button (click)="nuevoProducto()" class="admin-documentos-upload-btn">
+        Nuevo producto
+      </button>
+    </div>
+
+    @if (cargando) {
+      <div class="admin-documentos-empty">Cargando productos...</div>
+    }
+    @if (!cargando && productos.length === 0) {
+      <div class="admin-documentos-empty">
+        Todavía no hay productos en el catálogo.
+      </div>
+    }
+
+    @if (!cargando && productos.length > 0) {
+      <div class="admin-productos-scroll">
+      <table class="admin-documentos-table hidden lg:table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Presentación</th>
+            <th>Precio</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (producto of productosPagina; track producto.id) {
+            <tr>
+              <td><img [src]="urlImagen(producto.imagenUrl)" [alt]="producto.nombre" class="admin-productos-thumb" /></td>
+              <td class="font-medium">{{ producto.nombre }}</td>
+              <td>{{ producto.categoria }}</td>
+              <td>{{ producto.presentacion }}</td>
+              <td>{{ formatoPrecio(producto.precio) }}</td>
+              <td class="admin-documentos-actions-cell">
+                <button (click)="iniciarEdicion(producto)" class="admin-documentos-action-btn">Editar</button>
+                <button (click)="eliminar(producto)" class="admin-documentos-action-btn admin-documentos-action-delete">Eliminar</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <div class="admin-documentos-mobile-list">
+        @for (producto of productosPagina; track producto.id) {
+          <div class="admin-documentos-mobile-card">
+            <div class="admin-productos-mobile-head">
+              <img [src]="urlImagen(producto.imagenUrl)" [alt]="producto.nombre" class="admin-productos-thumb" />
+              <p class="admin-documentos-mobile-name" [title]="producto.nombre">{{ producto.nombre }}</p>
+            </div>
+            <div class="admin-documentos-mobile-row">
+              <span class="admin-documentos-mobile-label">Categoría:</span>
+              <span>{{ producto.categoria }}</span>
+            </div>
+            <div class="admin-documentos-mobile-row">
+              <span class="admin-documentos-mobile-label">Presentación:</span>
+              <span>{{ producto.presentacion }}</span>
+            </div>
+            <div class="admin-documentos-mobile-row">
+              <span class="admin-documentos-mobile-label">Precio:</span>
+              <span>{{ formatoPrecio(producto.precio) }}</span>
+            </div>
+            <div class="admin-documentos-mobile-actions">
+              <button (click)="iniciarEdicion(producto)" class="admin-documentos-action-btn">Editar</button>
+              <button (click)="eliminar(producto)" class="admin-documentos-action-btn admin-documentos-action-delete">Eliminar</button>
+            </div>
+          </div>
+        }
+      </div>
+      </div>
+
+      @if (totalPaginas > 1) {
+        <div class="registros-paginacion">
+          <button
+            class="registros-paginacion-btn"
+            [disabled]="paginaActual === 0"
+            (click)="paginaAnterior()">
+            Anterior
+          </button>
+          <span class="registros-paginacion-info">
+            Página {{ paginaActual + 1 }} de {{ totalPaginas }}
+          </span>
+          <button
+            class="registros-paginacion-btn"
+            [disabled]="paginaActual >= totalPaginas - 1"
+            (click)="paginaSiguiente()">
+            Siguiente
+          </button>
+        </div>
+      }
+    }
+  }
+</div>

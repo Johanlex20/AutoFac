@@ -128,6 +128,21 @@ html, body {
   display: none;
 }
 
+/* Lo mismo cuando el mouse esta sobre "Cerrar sesion", que vive fuera del <ul>:
+   la pestana activa se apaga para que la curva de Cerrar sesion no le recorte el borde */
+.sideBar:has(.sideBar-logout:hover) ul li.active {
+  background: transparent;
+}
+
+.sideBar:has(.sideBar-logout:hover) ul li.active a {
+  color: #ffffff;
+}
+
+.sideBar:has(.sideBar-logout:hover) ul li.active b:nth-child(1),
+.sideBar:has(.sideBar-logout:hover) ul li.active b:nth-child(2) {
+  display: none;
+}
+
 /*Elemento de la Curva de la etiqueta hacia arriba blanca*/
 .sideBar ul li b:nth-child(1){
     position: absolute;
@@ -621,7 +636,28 @@ background: #ff4d89;
 
 .area-work {
   transition: 0.3s;
+  min-height: 0;
+  overflow: hidden; /* nada se sale del marco blanco, sea cual sea el zoom */
 }
+
+/*
+ * El router-outlet inserta cada pagina dentro de su propia etiqueta (<app-home>, <app-registros>...),
+ * que por defecto no tiene alto definido: su contenido se salia del dashboard al subir el zoom.
+ * Aqui la etiqueta ocupa todo el area de trabajo y hace scroll por dentro cuando no cabe.
+ */
+.area-work > :not(router-outlet) {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+}
+
+/*
+ * Paginas con lista (Productos, Registros) administran su propio scroll: la raiz ocupa todo el alto
+ * (.admin-productos / .registros-page) y solo la lista hace scroll; paginacion y botones quedan fijos abajo.
+ */
 
 
 
@@ -773,12 +809,21 @@ background: #ff4d89;
     w-fit
     flex
     justify-center
-    mt-auto
-    sticky
-    bottom-0
-    bg-white
+    shrink-0
     py-2
-    z-10
+}
+
+/* Pagina de Registros: titulo arriba, tabla con scroll propio, paginacion y boton fijos abajo */
+.registros-page {
+  @apply w-full flex-1 min-h-0 min-w-0 flex flex-col;
+}
+
+.registros-scroll {
+  @apply flex-1 min-h-0 min-w-0 overflow-auto;
+}
+
+.registros-page .registros-paginacion {
+  @apply shrink-0;
 }
 
 .btn-work-add{
@@ -1122,6 +1167,406 @@ background: #ff4d89;
 
 .admin-documentos-mobile-actions {
   @apply flex flex-wrap gap-2 mt-3;
+}
+
+
+/* ===============================
+    ADMIN - CENTRO DE NOTIFICACIONES (Messages)
+    Cada gravedad define sus colores en variables; el resto de reglas las usa.
+================================ */
+
+.msg-critica     { --msg-color: #dc2626; --msg-fondo: #fef2f2; }
+.msg-advertencia { --msg-color: #d97706; --msg-fondo: #fffbeb; }
+.msg-info        { --msg-color: #0089bb; --msg-fondo: #e6f6fd; }
+.msg-exito       { --msg-color: #059669; --msg-fondo: #ecfdf5; }
+
+.msg-page {
+  @apply flex flex-col gap-5;
+}
+
+.msg-header {
+  @apply flex flex-wrap items-start justify-between gap-3;
+}
+
+.msg-header-acciones {
+  @apply flex flex-wrap gap-2;
+}
+
+.msg-btn-icono {
+  @apply inline-flex items-center gap-1.5;
+}
+
+.msg-btn-icono .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.msg-cargando {
+  @apply flex items-center gap-2 text-sm text-gray-500 py-10 justify-center;
+}
+
+.msg-cargando-icono {
+  animation: msg-girar 1s linear infinite;
+}
+
+@keyframes msg-girar {
+  to { transform: rotate(360deg); }
+}
+
+/* Tarjetas de resumen */
+.msg-resumen {
+  @apply grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3;
+}
+
+.msg-stat {
+  @apply relative flex flex-col items-start gap-0.5 p-4 rounded-2xl bg-white border border-gray-100 shadow-sm text-left cursor-pointer transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
+  border-top: 4px solid var(--msg-color, #0089bb);
+}
+
+.msg-stat-sinleer {
+  --msg-color: #7c3aed;
+}
+
+.msg-stat-activa {
+  @apply ring-2 shadow-md;
+  --tw-ring-color: var(--msg-color);
+  background: var(--msg-fondo, #f5f3ff);
+}
+
+.msg-stat-sinleer.msg-stat-activa {
+  --msg-fondo: #f5f3ff;
+}
+
+.msg-stat-icono {
+  color: var(--msg-color);
+  font-size: 26px;
+}
+
+.msg-stat-valor {
+  @apply text-3xl font-bold text-blue-dark leading-none mt-1;
+}
+
+.msg-stat-etiqueta {
+  @apply text-xs font-semibold uppercase tracking-wide text-gray-500;
+}
+
+/* Disposicion principal */
+.msg-layout {
+  @apply grid grid-cols-1 xl:grid-cols-3 gap-5 items-start;
+}
+
+.msg-principal {
+  @apply xl:col-span-2 flex flex-col gap-3 min-w-0;
+}
+
+.msg-lateral {
+  @apply flex flex-col gap-4 min-w-0;
+}
+
+/* Filtros por categoria */
+.msg-chips {
+  @apply flex flex-wrap gap-2;
+}
+
+.msg-chip {
+  @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-white border border-gray-200 text-gray-600 cursor-pointer transition-colors duration-200 hover:bg-sky-50;
+}
+
+.msg-chip .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.msg-chip-activo {
+  @apply bg-blue-main text-white border-transparent hover:bg-blue-main;
+}
+
+.msg-chip-contador {
+  @apply ml-0.5 px-1.5 rounded-full bg-black/10 text-xs font-semibold;
+}
+
+/* Notificaciones */
+.msg-lista {
+  @apply flex flex-col gap-3;
+}
+
+.msg-item {
+  @apply flex items-start gap-3 p-4 rounded-2xl bg-white border border-gray-100 shadow-sm cursor-pointer transition-all duration-200 hover:shadow-md;
+  border-left: 4px solid var(--msg-color);
+}
+
+.msg-leida {
+  @apply opacity-60 shadow-none;
+}
+
+.msg-icono {
+  @apply flex items-center justify-center w-11 h-11 rounded-xl shrink-0;
+  background: var(--msg-fondo);
+  color: var(--msg-color);
+}
+
+.msg-cuerpo {
+  @apply flex-1 min-w-0 flex flex-col gap-1;
+}
+
+.msg-titulo-fila {
+  @apply flex items-center gap-2;
+}
+
+.msg-titulo {
+  @apply font-semibold text-blue-dark text-sm sm:text-base leading-snug;
+}
+
+.msg-punto {
+  @apply w-2.5 h-2.5 rounded-full shrink-0;
+  background: var(--msg-color);
+}
+
+.msg-detalle {
+  @apply text-sm text-gray-500 break-words;
+}
+
+.msg-pie {
+  @apply flex flex-wrap items-center gap-2 mt-1;
+}
+
+.msg-tiempo {
+  @apply text-xs text-gray-400;
+}
+
+.msg-etiqueta {
+  @apply px-2 py-0.5 rounded-md text-[11px] font-semibold uppercase tracking-wide;
+}
+
+.msg-etiqueta-siigo      { @apply bg-sky-100 text-sky-700; }
+.msg-etiqueta-productos  { @apply bg-violet-100 text-violet-700; }
+.msg-etiqueta-documentos { @apply bg-amber-100 text-amber-700; }
+.msg-etiqueta-sistema    { @apply bg-gray-100 text-gray-600; }
+
+.msg-accion {
+  @apply shrink-0 self-center px-3 py-1.5 rounded-lg border border-gray-300 text-xs font-medium text-gray-600 cursor-pointer transition-colors duration-200 hover:bg-gray-100 no-underline;
+}
+
+.msg-vacio {
+  @apply flex flex-col items-center gap-2 py-12 text-sm text-gray-500 bg-white rounded-2xl border border-dashed border-gray-200;
+}
+
+.msg-vacio-icono {
+  @apply text-gray-300;
+  font-size: 44px;
+}
+
+/* Paneles laterales */
+.msg-panel {
+  @apply bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col gap-3;
+}
+
+.msg-panel-titulo {
+  @apply flex items-center gap-2 text-base font-bold text-blue-dark;
+}
+
+.msg-panel-titulo .material-symbols-outlined {
+  @apply text-blue-main;
+  font-size: 22px;
+}
+
+.msg-dato {
+  @apply flex items-baseline justify-between gap-3 pb-2 border-b border-gray-100 last:border-b-0;
+}
+
+.msg-dato-etiqueta {
+  @apply text-sm text-gray-500;
+}
+
+.msg-dato-valor {
+  @apply text-sm font-bold text-blue-dark text-right;
+}
+
+.msg-variacion {
+  @apply flex items-center gap-1.5 text-sm font-medium text-gray-500 rounded-lg bg-gray-50 px-3 py-2;
+}
+
+.msg-variacion-sube { @apply bg-emerald-50 text-emerald-700; }
+.msg-variacion-baja { @apply bg-red-50 text-red-700; }
+
+.msg-estado {
+  @apply flex items-center gap-3;
+}
+
+.msg-estado-punto {
+  @apply w-2.5 h-2.5 rounded-full shrink-0;
+}
+
+.msg-estado-ok    { @apply bg-emerald-500; }
+.msg-estado-aviso { @apply bg-amber-500; }
+.msg-estado-error { @apply bg-red-500; }
+
+.msg-estado-icono {
+  @apply text-gray-400;
+  font-size: 22px;
+}
+
+.msg-estado-texto,
+.msg-linea-texto {
+  @apply flex flex-col min-w-0;
+}
+
+.msg-estado-nombre {
+  @apply text-sm font-semibold text-blue-dark break-words;
+}
+
+.msg-estado-detalle {
+  @apply text-xs text-gray-500 break-words;
+}
+
+/* Linea de tiempo */
+.msg-linea {
+  @apply flex flex-col gap-3;
+}
+
+.msg-linea-item {
+  @apply flex gap-3 items-start;
+}
+
+.msg-linea-icono {
+  @apply flex items-center justify-center w-8 h-8 rounded-full shrink-0;
+}
+
+.msg-linea-icono .material-symbols-outlined {
+  font-size: 18px;
+}
+
+
+/* ===============================
+    ADMIN - PERFIL
+    (reutiliza admin-documentos-*; aqui solo lo propio)
+================================ */
+
+.perfil-grid {
+  @apply grid grid-cols-1 lg:grid-cols-3 gap-6 items-start;
+}
+
+.perfil-columna {
+  @apply lg:col-span-2 flex flex-col gap-6 min-w-0;
+}
+
+.perfil-card {
+  @apply bg-white rounded-2xl shadow-lg border border-gray-100 p-6 min-w-0;
+}
+
+.perfil-card-foto {
+  @apply flex flex-col items-center text-center gap-1;
+}
+
+.perfil-card-sub {
+  @apply mb-5;
+}
+
+.perfil-avatar {
+  @apply w-36 h-36 rounded-full overflow-hidden bg-blue-main flex items-center justify-center mb-3 ring-4 ring-sky-100;
+}
+
+.perfil-avatar-cargando {
+  @apply opacity-60;
+}
+
+.perfil-avatar-img {
+  @apply w-full h-full object-cover;
+}
+
+.perfil-avatar-iniciales {
+  @apply text-4xl font-bold text-white;
+}
+
+.perfil-nombre {
+  @apply text-lg font-bold text-blue-dark break-words max-w-full;
+}
+
+.perfil-email {
+  @apply text-sm text-gray-500 break-all max-w-full;
+}
+
+.perfil-rol {
+  @apply mt-2 px-3 py-0.5 rounded-full bg-sky-100 text-blue-dark text-xs font-semibold uppercase tracking-wide;
+}
+
+.perfil-foto-acciones {
+  @apply flex flex-wrap justify-center gap-2 mt-4;
+}
+
+.perfil-campos {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-x-4;
+}
+
+.perfil-campo-ancho {
+  @apply sm:col-span-2;
+}
+
+.perfil-acciones {
+  @apply flex justify-end mt-2 pt-4 border-t border-gray-100;
+}
+
+.perfil-error {
+  @apply text-sm text-red-600 mb-2;
+}
+
+/* Foto del usuario en el menu lateral (reemplaza el icono de Profile) */
+/* Mismo ancho (60px) que los demas iconos del menu, con la foto centrada en ese espacio.
+   El selector largo es necesario para ganarle a ".sideBar ul li a .icon" (display: block). */
+.sideBar ul li a .sidebar-avatar-wrap {
+  @apply flex items-center justify-center relative z-10;
+  /* z-10: la curva de la pestana de abajo (li b:nth-child(1), top:-20px) se pinta sobre la fila anterior
+     y recortaba la foto; con z-index la foto queda por encima de esa banda */
+}
+
+.sidebar-avatar {
+  @apply w-9 h-9 rounded-full object-cover border-2 border-white/80;
+}
+
+
+/* ===============================
+    ADMIN - PRODUCTOS
+    (reutiliza admin-documentos-*; aqui solo lo propio)
+================================ */
+
+/* La pagina ocupa el alto del area de trabajo: la lista hace scroll por dentro
+   y la paginacion queda fija abajo, para que nada se desborde del dashboard. */
+.admin-productos {
+  @apply flex-1 min-h-0 min-w-0 flex flex-col;
+}
+
+.admin-productos-scroll {
+  @apply flex-1 min-h-0 min-w-0 overflow-auto;
+}
+
+.admin-productos-row {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-x-4;
+}
+
+.admin-productos-thumb {
+  @apply w-12 h-12 object-contain rounded-lg bg-gray-50 border border-gray-100;
+}
+
+.admin-productos-preview {
+  @apply flex justify-center mb-2 p-3 rounded-xl bg-gray-50 border border-gray-100;
+}
+
+.admin-productos-preview-img {
+  @apply h-40 object-contain;
+}
+
+.admin-productos-hint {
+  @apply text-xs text-gray-400;
+}
+
+.admin-productos-quitar {
+  @apply self-start mb-2;
+}
+
+.admin-productos-mobile-head {
+  @apply flex items-center gap-3 mb-2;
+}
+
+.admin-productos-mobile-head .admin-documentos-mobile-name {
+  @apply mb-0;
 }
 
 

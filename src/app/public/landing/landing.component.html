@@ -95,7 +95,7 @@
         @for (producto of productos; track producto.id) {
           <div class="landing-producto-card">
             <div class="landing-producto-img-wrap">
-              <img [src]="producto.imagenUrl" [alt]="producto.nombre" class="landing-producto-img" />
+              <img [src]="urlImagen(producto.imagenUrl)" [alt]="producto.nombre" class="landing-producto-img" />
             </div>
             <div class="landing-producto-body">
               <span class="landing-producto-categoria">{{ producto.categoria }}</span>
@@ -103,7 +103,7 @@
               <p class="landing-producto-descripcion">{{ producto.descripcion }}</p>
               <div class="landing-producto-footer">
                 <div>
-                  <span class="landing-producto-precio">{{ formatoPrecio(producto.precio) }}</span>
+                  <span class="landing-producto-precio">{{ producto.precio > 0 ? formatoPrecio(producto.precio) : 'Consultar precio' }}</span>
                   <span class="landing-producto-presentacion">/ {{ producto.presentacion }}</span>
                 </div>
                 <button type="button" class="landing-producto-boton" (click)="agregarAlCarrito(producto)">

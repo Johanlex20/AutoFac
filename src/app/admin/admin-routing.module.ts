@@ -7,6 +7,7 @@ import { MessagesComponent } from '../messages/messages.component';
 import { RegistrosComponent } from '../registros/registros.component';
 import { UserComponent } from '../user/user.component';
 import { DocumentosComponent } from '../admin/documentos/documentos.component';
+import { ProductosComponent } from '../admin/productos/productos.component';
 import { LoginComponent } from './login/login.component';
 import { authGuard } from '../auth/auth.guard';
 
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'messages/list', component: MessagesComponent },
       { path: 'usuarios/list', component: UserComponent },
       { path: 'documentos/list', component: DocumentosComponent },
+      { path: 'productos/list', component: ProductosComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   }
